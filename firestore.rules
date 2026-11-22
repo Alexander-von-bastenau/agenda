@@ -12,13 +12,14 @@ service cloud.firestore {
     match /members/{uid} {
       allow get: if request.auth != null && request.auth.uid == uid;
       allow read: if isMember();
-      allow create: if request.auth != null && request.auth.uid == uid && ((request.resource.data.role == 'admin' && !exists(/databases/$(database)/documents/meta/boot) && getAfter(/databases/$(database)/documents/meta/boot).data.owner == uid) || (request.resource.data.invite != '' && get(/databases/$(database)/documents/invites/$(request.resource.data.invite)).data.role == request.resource.data.role));
+      allow create: if request.auth != null && request.auth.uid == uid && ((request.resource.data.role == 'admin' && !exists(/databases/$(database)/documents/meta/boot) && getAfter(/databases/$(database)/documents/meta/boot).data.owner == uid) || (request.resource.data.invite != '' && get(/databases/$(database)/documents/invites/$(request.resource.data.invite)).data.role == request.resource.data.role && get(/databases/$(database)/documents/invites/$(request.resource.data.invite)).data.get('used', request.auth.uid) == request.auth.uid));
       allow update: if isAdmin() || (request.auth != null && request.auth.uid == uid && request.resource.data.role == resource.data.role);
       allow delete: if isAdmin();
     }
     match /invites/{token} {
       allow get: if true;
       allow list, write: if isAdmin();
+      allow update: if request.auth != null && !('used' in resource.data) && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['used']) && request.resource.data.used == request.auth.uid;
     }
     match /config/{d} {
       allow read: if isMember();
