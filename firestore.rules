@@ -1,0 +1,36 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function me() { return get(/databases/$(database)/documents/members/$(request.auth.uid)).data; }
+    function isMember() { return request.auth != null && exists(/databases/$(database)/documents/members/$(request.auth.uid)); }
+    function isAdmin() { return isMember() && me().role == 'admin'; }
+    function canEdit() { return isMember() && me().role in ['admin', 'carer']; }
+    match /meta/boot {
+      allow get: if request.auth != null;
+      allow create: if request.auth != null && request.resource.data.owner == request.auth.uid;
+    }
+    match /members/{uid} {
+      allow get: if request.auth != null && request.auth.uid == uid;
+      allow read: if isMember();
+      allow create: if request.auth != null && request.auth.uid == uid && ((request.resource.data.role == 'admin' && !exists(/databases/$(database)/documents/meta/boot) && getAfter(/databases/$(database)/documents/meta/boot).data.owner == uid) || (request.resource.data.invite != '' && get(/databases/$(database)/documents/invites/$(request.resource.data.invite)).data.role == request.resource.data.role));
+      allow update, delete: if isAdmin();
+    }
+    match /invites/{token} {
+      allow get: if request.auth != null;
+      allow list, write: if isAdmin();
+    }
+    match /config/{d} {
+      allow read: if isMember();
+      allow write: if isAdmin();
+    }
+    match /claims/{day} {
+      allow read: if isMember();
+      allow create: if canEdit() && request.resource.data.uid == request.auth.uid;
+      allow update, delete: if isAdmin() || (canEdit() && resource.data.uid == request.auth.uid);
+    }
+    match /{col}/{id} {
+      allow read: if isMember() && col in ['people', 'places', 'items', 'days', 'dates', 'notes'];
+      allow write: if canEdit() && col in ['people', 'places', 'items', 'days', 'dates', 'notes'];
+    }
+  }
+}
