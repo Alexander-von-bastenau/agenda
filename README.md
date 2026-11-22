@@ -1,4 +1,4 @@
-# Agenda
+# Bijtje
 
 A visual, spoken day and week agenda for a person who cannot read, kept up to date by her family.
 
