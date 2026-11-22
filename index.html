@@ -197,6 +197,51 @@ body.night .board,body.night .wk-h .arrow,body.night .dots{opacity:.4}
 .linkrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:6px}
 .linkrow input{flex:1 1 240px;max-width:none;font-size:14px}
 .rolechip{display:inline-block;font-size:13px;padding:2px 10px;border-radius:10px;background:var(--line)}
+.dshort,.brk{display:none}
+@media(max-width:760px){
+ .now{flex-wrap:wrap!important;row-gap:8px}.brk{display:block;flex-basis:100%;height:0}
+ /* whole week visible at once on a phone */
+ .board{grid-template-columns:repeat(7,minmax(0,1fr))!important;grid-auto-flow:row!important;grid-auto-columns:auto!important;overflow:visible!important;gap:4px!important;padding:56px 0 8px!important;scroll-snap-type:none}
+ .day{padding:8px 2px 10px!important;padding-inline-start:2px!important;border-radius:14px;gap:6px;min-height:56vh;box-shadow:0 3px 0 rgba(0,0,0,.14)}
+ .day .vname,.day .tm{display:none}
+ .dshort{display:block;font:800 15px/1 'Baloo 2',sans-serif;text-transform:capitalize}
+ .day .home{width:40px;height:40px;font-size:24px;border-radius:12px;border-width:2px}
+ .day .stack{gap:5px}.day .stack span{width:36px;height:36px;font-size:22px;border-radius:10px}
+ .day .stack .pp{border-width:2px}
+ .day .stack .here .ava{width:32px;height:32px;font-size:18px;border-width:2px}
+ .day .cap{width:30px;height:30px;font-size:17px}
+ .day .ob{border-width:2px;inset-block-end:-4px;inset-inline-end:-5px}
+ .day.today{outline-width:4px;outline-offset:2px}
+ .day.past::after{inset-inline-start:50%;width:28px;height:28px;font-size:17px!important}
+ .day .meflag{top:-48px!important}.day .meflag .ava{width:40px;height:40px;font-size:24px;border-width:3px}
+ .me{outline-width:4px}
+ /* day sheet */
+ .sheet{padding-inline:10px}
+ .sheet-h{gap:8px;padding:8px 0}
+ .dayhead{min-height:56px;border-radius:18px;flex-direction:column;gap:2px;padding:6px 8px}
+ .dayhead b{font-size:20px}.dayhead span{font-size:13px}
+ .sheet-h .spk{width:64px;height:56px;font-size:30px;border-radius:18px}
+ .close,.edbtn{width:56px;height:56px;font-size:26px;flex:none}
+ .tl{margin-inline-start:52px}.tl .hr{inset-inline-start:-52px;font-size:12px}
+ .nowline{inset-inline-start:-52px}.nowline .ava{width:48px;height:48px;font-size:28px;top:-26px;border-width:3px}
+ .blk{border-radius:16px;padding:6px 10px}.blk .in{gap:8px;top:84px}
+ .blk .tile,.blk .ava{width:52px;height:52px;font-size:32px;border-width:3px}
+ .blk small{font-size:13px;flex-basis:100%}
+ .endcap{font-size:34px}
+ /* family panel */
+ .ed h2{font-size:22px}
+ .tabs{flex-wrap:nowrap;overflow-x:auto;margin:0 -10px 12px;padding:0 10px 6px;position:sticky;top:72px;background:var(--bg);z-index:2;scrollbar-width:none}
+ .tabs::-webkit-scrollbar{display:none}
+ .tabs button{flex:none;min-height:42px;padding:0 14px;font-size:15px;border-radius:21px}
+ .ovd h3{font-size:18px}.ovd h3 small{display:block;font-size:13px}
+ .ovd h3 .btn{min-height:40px;padding:0 12px;font-size:15px}
+ .btn{min-height:48px;padding:0 16px}
+ .card{padding:12px;border-radius:16px}
+ .pick button{min-width:48px;min-height:48px;font-size:24px;padding:4px 8px}.pick button span{font-size:14px}
+ .li .btn{min-height:40px;padding:0 10px;font-size:14px}
+ input[type=time]{max-width:130px}
+ .special{font-size:16px;padding:8px 12px}.special .big{font-size:36px}.special .ava{width:44px;height:44px;font-size:26px}
+}
 </style>
 <script src="fb/firebase-app-compat.js"></script>
 <script src="fb/firebase-auth-compat.js"></script>
@@ -356,7 +401,7 @@ function render(){const T=t(),td=today();
   const q=Math.ceil(((next?mins(next.start):sleepM())-n)/15);
   const q15=awake?`<span class="q15" aria-hidden="true">${[...Array(8)].map((_,i)=>`<i class="${i>=8-Math.min(q,8)?'on':''}"></i>`).join('')}</span>`:'';
   const nb=$('#now');nb.setAttribute('style',awake?cv(td):'--c:#2b2760;--k:#ffffff');nb.dataset.day=key(td);
-  nb.innerHTML=`${ava(meP(),'me')}<span class="pin">${awake?'📍':''}</span>${mid}${q15}${awake||n<wakeM()?nx:''}`;
+  nb.innerHTML=`${ava(meP(),'me')}<span class="pin">${awake?'📍':''}</span>${mid}<span class="brk"></span>${q15}${awake||n<wakeM()?nx:''}`;
   nb.dataset.say=cur?`${T.now}: ${sayItem(cur)}${next?` ${T.then}: ${sayItem(next)}`:''}`:(next?`${T.then}: ${sayItem(next)}`:'');
   // week board
   const base=addD(td,-((td.getDay()+6)%7)+S.wk*7);
@@ -375,7 +420,7 @@ function render(){const T=t(),td=today();
         if(dn)out=out.replace(/<span (class="pp" )?style/g,(m,c)=>c?'<span class="pp dn" style':'<span class="dn" style');
         if((cur||(!placed&&mins(x.start)>nm))&&!placed){placed=true;out=(cur?out:'')+`<span class="here">${ava(meP(),'me')}</span>`+(cur?'':out)}}
       return out}).join('');
-    return `<button class="day${d<td?' past':''}${isT?' today':''}" style="${cv(d)}" data-day="${k}" aria-label="${T.days[d.getDay()]} ${d.getDate()} ${T.mon[d.getMonth()]}">${isT?`<span class="meflag">${ava(meP(),'me')}</span>`:''}<span class="vname" aria-hidden="true"><span>${T.days[d.getDay()]}</span></span><span class="tm">☀️ ${hhmm(wakeM(d))}</span>${mp?`${plTile(mp,'home'+(isT&&its.filter(x=>x.place===mp.id).every(x=>mins(x.end)<=nowMin())?' dn':''))}`:'<span class="cap">☀️</span>'}<span class="stack">${st}</span>${datesFor(d).map(x=>`<span class="cap">${esc(x.emoji||'🎂')}</span>`).join('')}${its.some(x=>x.star)?'<span class="cap">⭐</span>':''}<span class="cap" style="margin-top:auto">🌙</span><span class="tm">${hhmm(sleepM(d))}</span></button>`}).join('');
+    return `<button class="day${d<td?' past':''}${isT?' today':''}" style="${cv(d)}" data-day="${k}" aria-label="${T.days[d.getDay()]} ${d.getDate()} ${T.mon[d.getMonth()]}">${isT?`<span class="meflag">${ava(meP(),'me')}</span>`:''}<span class="vname" aria-hidden="true"><span>${T.days[d.getDay()]}</span></span><b class="dshort" aria-hidden="true">${T.days[d.getDay()].slice(0,2)}</b><span class="tm">☀️ ${hhmm(wakeM(d))}</span>${mp?`${plTile(mp,'home'+(isT&&its.filter(x=>x.place===mp.id).every(x=>mins(x.end)<=nowMin())?' dn':''))}`:'<span class="cap">☀️</span>'}<span class="stack">${st}</span>${datesFor(d).map(x=>`<span class="cap">${esc(x.emoji||'🎂')}</span>`).join('')}${its.some(x=>x.star)?'<span class="cap">⭐</span>':''}<span class="cap" style="margin-top:auto">🌙</span><span class="tm">${hhmm(sleepM(d))}</span></button>`}).join('');
   $('#board').classList.toggle('hasToday',hasT);
   {const n=S.notes.filter(x=>x.day===key(td)).length,bd=$('#badge');bd.hidden=!n;bd.textContent=n}
   if(hasT&&!S.scrolled&&S.items.length){const b=$('#board'),d=$('.day.today');if(b&&d&&b.scrollWidth>b.clientWidth){S.scrolled=true;b.scrollLeft=d.offsetLeft-(b.clientWidth-d.clientWidth)/2}}
