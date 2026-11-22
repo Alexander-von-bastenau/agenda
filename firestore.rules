@@ -35,9 +35,15 @@ service cloud.firestore {
       allow delete: if isAdmin() || (canEdit() && resource.data.by == request.auth.uid);
     }
     match /docs/{id} {
-      allow read, write: if canEdit();
+      function sees(d) { return isAdmin() || d.by == request.auth.uid || 'all' in d.to || request.auth.uid in d.to; }
+      allow read: if canEdit() && sees(resource.data);
+      allow create: if canEdit() && request.resource.data.by == request.auth.uid && request.resource.data.to is list;
+      allow update: if canEdit() && (isAdmin() || resource.data.by == request.auth.uid) && request.resource.data.by == resource.data.by && request.resource.data.to is list;
+      allow delete: if canEdit() && (isAdmin() || resource.data.by == request.auth.uid);
       match /parts/{p} {
-        allow read, write: if canEdit();
+        allow read: if canEdit() && sees(get(/databases/$(database)/documents/docs/$(id)).data);
+        allow create: if canEdit() && !exists(/databases/$(database)/documents/docs/$(id));
+        allow delete: if canEdit() && (isAdmin() || get(/databases/$(database)/documents/docs/$(id)).data.by == request.auth.uid);
       }
     }
     match /{col}/{id} {
