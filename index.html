@@ -20,7 +20,7 @@
    PICTURE: the week board itself; tapping a strip unrolls it into a day ribbon from sun-up to moon, with a live "now" line.
    COLOUR and TYPE: one strong colour per weekday on a white board; Andika + Baloo 2 for the few helper words.
    LAYOUT: now-strip (where am I, what now, what next) → week board → full-screen day ribbon; editor behind a long press. */
-:root{color-scheme:light dark;--bg:light-dark(#ffffff,#17142a);--ink:light-dark(#1d1a2e,#f6f3ff);--soft:light-dark(#f3f0fa,#25213d);--line:light-dark(#e2dcef,#3a3458)}
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#1a160d);--ink:light-dark(#2b2118,#fff8e6);--soft:light-dark(#fff5d6,#2a2415);--line:light-dark(#f0dfa6,#4a3f22)}
 :root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
 *{box-sizing:border-box;min-width:0}
 body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.45 Andika,system-ui,sans-serif;overflow-x:clip;-webkit-tap-highlight-color:transparent;user-select:none}
@@ -56,7 +56,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 .band{padding:clamp(14px,2.4vw,28px) max(3vw,12px)}
 .nowwrap{display:flex;gap:12px;align-items:stretch}.nowwrap .now{flex:1}
 .spk{width:110px;flex:none;border-radius:32px;background:var(--ink);color:var(--bg);font-size:56px;display:grid;place-items:center;box-shadow:0 8px 0 rgba(0,0,0,.2)}
-.spk.talk{background:#ffcc00;color:#1d1a2e}
+.spk.talk{background:#ffcc00;color:#2b2118}
 .sheet-h .spk{width:96px;height:72px;font-size:44px;border-radius:24px;box-shadow:none}
 .now{justify-content:center;display:flex;align-items:center;gap:clamp(10px,2vw,22px);background:var(--c);color:var(--k);border-radius:32px;padding:14px 22px;box-shadow:0 8px 0 rgba(0,0,0,.15);width:100%;flex-wrap:wrap}
 .now .pin{font-size:44px}
@@ -66,6 +66,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 .tile{width:92px;height:92px;flex:none;border-radius:24px;display:grid;place-items:center;font-size:56px;background:var(--pc,#fff);box-shadow:inset 0 -6px 0 rgba(0,0,0,.14),0 3px 0 rgba(0,0,0,.12);position:relative}
 .ava{width:92px;height:92px;flex:none;border-radius:50%;display:grid;place-items:center;font-size:54px;background:var(--pc,#eee);border:5px solid #fff;position:relative;box-shadow:0 3px 0 rgba(0,0,0,.15)}
 .ava img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.ava img.sym{width:84%;height:84%;object-fit:contain;border-radius:0}
 .ava i{position:absolute;inset-block-end:-6px;inset-inline-end:-8px;font-style:normal;font-size:.42em;background:#fff;border-radius:50%;width:1.6em;height:1.6em;display:grid;place-items:center;box-shadow:0 2px 4px rgba(0,0,0,.2)}
 .me{outline:6px solid #ffcc00}
 .ob{position:absolute;inset-block-end:-6px;inset-inline-end:-8px;width:52%;height:52%;border-radius:50%;background:var(--oc,#fff);border:3px solid #fff;display:grid;place-items:center;font-style:normal;font-size:.5em;line-height:1;box-shadow:0 2px 4px rgba(0,0,0,.25);overflow:hidden;z-index:1}
@@ -90,7 +91,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 .day .stack .here .ava{width:clamp(36px,5vw,48px);height:clamp(36px,5vw,48px);font-size:clamp(20px,3vw,28px);border-width:3px}
 .day .stack .pp{border-radius:50%;border:3px solid #fff}
 .day.past{opacity:.38;filter:saturate(.5)}
-.day.past::after{content:"✓";position:absolute;top:50%;inset-inline-start:calc(50% + 15px);translate:-50% -50%;width:44px;height:44px;font-size:26px!important;border-radius:50%;background:rgba(255,255,255,.9);color:#1d1a2e;display:grid;place-items:center;font:800 18px/1 'Baloo 2'}
+.day.past::after{content:"✓";position:absolute;top:50%;inset-inline-start:calc(50% + 15px);translate:-50% -50%;width:44px;height:44px;font-size:26px!important;border-radius:50%;background:rgba(255,255,255,.9);color:#2b2118;display:grid;place-items:center;font:800 18px/1 'Baloo 2'}
 .day .tm{font:700 13px/1 Andika;opacity:.85;margin-top:-4px}
 .day.today{outline:7px solid var(--ink);outline-offset:4px;z-index:1}
 .day .meflag{position:absolute;top:-78px;font-size:40px}
@@ -106,7 +107,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 .tl{position:relative;margin:10px 0 20px 64px}
 .tl .hr{position:absolute;inset-inline:-64px 0;border-top:2px dashed var(--line);font-size:14px;opacity:.7}
 .tl .hr b{position:absolute;inset-inline-start:0;top:-11px;background:var(--bg);padding-inline-end:6px;font-weight:400}
-.blk{position:absolute;inset-inline:0;border-radius:22px;background:var(--pc);color:#1d1a2e;display:block;padding:8px 14px;overflow:clip;box-shadow:inset 0 -6px 0 rgba(0,0,0,.12);text-align:start}
+.blk{position:absolute;inset-inline:0;border-radius:22px;background:var(--pc);color:#2b2118;display:block;padding:8px 14px;overflow:clip;box-shadow:inset 0 -6px 0 rgba(0,0,0,.12);text-align:start}
 .blk .tile,.blk .ava{width:72px;height:72px;font-size:44px}
 .blk.short .tile,.blk.short .ava{width:46px;height:46px;font-size:28px;border-width:3px}
 .blk.done{opacity:.4;filter:saturate(.4)}
@@ -158,7 +159,7 @@ input[type=time]{max-width:160px}
 .q15 i{width:16px;height:16px;border-radius:50%;border:2px solid currentColor;opacity:.45}
 .q15 i.on{background:currentColor;opacity:1}
 .moons{font-size:30px;letter-spacing:2px}
-body.night{--bg:#12102a;--ink:#f1eeff;--soft:#25213d;--line:#3a3458}
+body.night{--bg:#12102a;--ink:#f1eeff;--soft:#2a2415;--line:#4a3f22}
 body.night .board,body.night .wk-h .arrow,body.night .dots{opacity:.4}
 .day .stack .off{opacity:.5;filter:grayscale(1)}
 .day .stack .off::after,.blk.off .in::after{content:"✕";color:#e53935;font:800 1.2em/1 'Baloo 2',sans-serif}
@@ -166,7 +167,7 @@ body.night .board,body.night .wk-h .arrow,body.night .dots{opacity:.4}
 .blk.off{filter:grayscale(.9);opacity:.6;background-image:repeating-linear-gradient(135deg,transparent 0 14px,rgba(0,0,0,.08) 14px 28px)}
 .blk.off .in::after{margin-inline-start:auto;font-size:44px}
 .blk.say{outline:7px solid #ffcc00;z-index:3}
-.special{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:#fff3c4;color:#1d1a2e;border-radius:22px;padding:10px 16px;margin:6px 0 14px;font-size:20px}
+.special{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:#fff3c4;color:#2b2118;border-radius:22px;padding:10px 16px;margin:6px 0 14px;font-size:20px}
 .special .big{font-size:52px;line-height:1}
 .special .ava{width:64px;height:64px;font-size:36px}
 .wk-h{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px;margin-bottom:16px}
@@ -245,7 +246,8 @@ body.night .board,body.night .wk-h .arrow,body.night .dots{opacity:.4}
  input[type=time]{max-width:130px}
  .special{font-size:16px;padding:8px 12px}.special .big{font-size:36px}.special .ava{width:44px;height:44px;font-size:26px}
 }
-input[type=email],input[type=password]{font:inherit;width:100%;box-sizing:border-box;padding:12px 14px;border:2px solid #d9d4e6;border-radius:14px;background:#fff;color:inherit}input[type=email]:focus,input[type=password]:focus{outline:3px solid #ffcc00;outline-offset:1px;border-color:#1f1a2e}
+input[type=email],input[type=password]{font:inherit;width:100%;box-sizing:border-box;padding:12px 14px;border:2px solid #f0dfa6;border-radius:14px;background:#fff;color:inherit}input[type=email]:focus,input[type=password]:focus{outline:3px solid #ffcc00;outline-offset:1px;border-color:#2b2118}
+.brand{display:flex;align-items:center;gap:10px;margin:0;font:800 26px/1 'Baloo 2',sans-serif}.brand img{border-radius:12px}
 </style>
 <script src="fb/firebase-app-compat.js"></script>
 <script src="fb/firebase-auth-compat.js"></script>
@@ -253,7 +255,7 @@ input[type=email],input[type=password]{font:inherit;width:100%;box-sizing:border
 <script src="tts/tts.js" defer></script>
 </head>
 <body>
-<main class="wrap"><section class="band"><div class="nowwrap"><button class="now" id="now" style="--c:#ccc;--k:#1d1a2e" aria-label="Nu"></button><button class="spk" id="spkNow" aria-label="Voorlezen">🔊</button></div></section>
+<main class="wrap"><section class="band"><div class="nowwrap"><button class="now" id="now" style="--c:#ccc;--k:#2b2118" aria-label="Nu"></button><button class="spk" id="spkNow" aria-label="Voorlezen">🔊</button></div></section>
 <section class="band" style="padding-top:4px">
   <div class="wk-h"><button class="arrow" id="prevW" aria-label="Vorige week">◀</button><span class="navr"><button class="arrow" id="season" aria-label="Seizoen"></button><div class="dots" id="dots" aria-hidden="true"></div></span><span class="navr"><button class="arrow" id="nextW" aria-label="Volgende week">▶</button><button class="edit holdbtn" id="edit" hidden data-hold="overview" aria-label="Voor de familie (ingedrukt houden)"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30"/></svg>👪<b id="badge" hidden></b></button></span></div>
   <div class="board" id="board"></div>
@@ -275,10 +277,10 @@ const today=()=>{const d=new Date();d.setHours(0,0,0,0);return d};
 const mins=s=>{if(!s)return null;const[h,m]=s.split(':').map(Number);return h*60+m};
 const nowMin=()=>{const d=new Date();return d.getHours()*60+d.getMinutes()};
 const hhmm=m=>`${pad(Math.floor(m/60))}:${pad(m%60)}`;
-const ANIMALS=['⭐','🦁','🐻','🐰','🦊','🐶','🐱','🐼','🐸','🦉','🐢','🐘','🦒','🐬','🦋','🐝','🐷','🐮','🐴','🦄','🐧','🐨','🐯','🐑','🐞'];
+const ANIMALS=['🐝','⭐','🦁','🐻','🐰','🦊','🐶','🐱','🐼','🐸','🦉','🐢','🐘','🦒','🐬','🦋','🐷','🐮','🐴','🦄','🐧','🐨','🐯','🐑','🐞'];
 const PLACES=['⚜️','🏕️','🏫','🏠','🏡','🏘️','🌳','🌊','🏊','🛒','🍽️','🎨','⚽','🐴','🚌','🚗','⛪','🏥','🎂','🎡','📚','🎵','🍦','⭐','🎄'];
 // activity: [emoji, colour, nl, es, en]
-const ACTS=[['🍳','#ffe08a','ontbijten','desayunar','have breakfast'],['🍽️','#ffd0a8','eten','comer','eat'],['🍰','#ffc6dc','een vieruurtje eten','merendar','have a snack'],['🚿','#b8e4ff','je wassen','ducharte','have a shower'],['🦷','#d6f2ff','je tanden poetsen','lavarte los dientes','brush your teeth'],['👕','#e5d8ff','je aankleden','vestirte','get dressed'],['🚌','#c9f0d0','met de bus rijden','ir en bus','take the bus'],['🚗','#d8f5c8','met de auto rijden','ir en coche','go by car'],['🎨','#ffd6f0','knutselen','hacer manualidades','do crafts'],['🧩','#ffe3c2','spelen','jugar','play'],['📺','#dcdcff','tv kijken','ver la tele','watch TV'],['🚶','#cdeed8','wandelen','pasear','go for a walk'],['🛒','#fff0b8','winkelen','ir de compras','go shopping'],['🏊','#bfe9f5','zwemmen','nadar','go swimming'],['🎵','#f3d4ff','muziek maken','hacer música','make music'],['⚽','#d2f5c4','sporten','hacer deporte','do sport'],['🐴','#f0dcc4','paardrijden','montar a caballo','ride a horse'],['🧺','#e9e2d0','helpen','ayudar','help out'],['😴','#d9d4f0','rusten','descansar','have a rest'],['🎂','#ffd2d2','naar een feestje','ir a una fiesta','go to a party'],['⛪','#e8e4f5','naar de kerk','ir a la iglesia','go to church'],['🛁','#c4e6ff','in bad gaan','bañarte','have a bath'],['☕','#ead7c3','een koffietje drinken','tomar un café','have a coffee'],['🍟','#ffe6a8','frietjes eten','comer papas fritas','eat chips'],['🛝','#d0f0ff','naar de speeltuin','ir al parque infantil','go to the playground']];
+const ACTS=[['🍳','#ffe08a','ontbijten','desayunar','have breakfast'],['🍽️','#ffd0a8','eten','comer','eat'],['🍰','#ffc6dc','een vieruurtje eten','merendar','have a snack'],['🚿','#b8e4ff','je wassen','ducharte','have a shower'],['🦷','#d6f2ff','je tanden poetsen','lavarte los dientes','brush your teeth'],['👕','#e5d8ff','je aankleden','vestirte','get dressed'],['🚌','#c9f0d0','met de bus rijden','ir en bus','take the bus'],['🚗','#d8f5c8','met de auto rijden','ir en coche','go by car'],['🎨','#ffd6f0','knutselen','hacer manualidades','do crafts'],['🧩','#ffe3c2','spelen','jugar','play'],['📺','#dcdcff','tv kijken','ver la tele','watch TV'],['🚶','#cdeed8','wandelen','pasear','go for a walk'],['🛒','#fff0b8','winkelen','ir de compras','go shopping'],['🏊','#bfe9f5','zwemmen','nadar','go swimming'],['🎵','#f3d4ff','muziek maken','hacer música','make music'],['⚽','#d2f5c4','sporten','hacer deporte','do sport'],['🐴','#f0dcc4','paardrijden','montar a caballo','ride a horse'],['🧺','#e9e2d0','helpen','ayudar','help out'],['😴','#f0dfa6','rusten','descansar','have a rest'],['🎂','#ffd2d2','naar een feestje','ir a una fiesta','go to a party'],['⛪','#e8e4f5','naar de kerk','ir a la iglesia','go to church'],['🛁','#c4e6ff','in bad gaan','bañarte','have a bath'],['☕','#ead7c3','een koffietje drinken','tomar un café','have a coffee'],['🍟','#ffe6a8','frietjes eten','comer papas fritas','eat chips'],['🛝','#d0f0ff','naar de speeltuin','ir al parque infantil','go to the playground']];
 const ACT=Object.fromEntries(ACTS.map(a=>[a[0],a]));
 const SW=['#2e9e4f','#f28c1b','#1e88e5','#8e44ad','#e0457b','#f2c200','#e53935','#00a5a5','#795548','#5c6bc0','#ff7043','#7cb342'];
 const DEFCOL=['#e53935','#2e9e4f','#f28c1b','#1e88e5','#8e44ad','#e0457b','#f2c200']; // index = getDay(): 0 = Sunday
@@ -303,7 +305,7 @@ const S={claims:{},members:{},invites:[],role:'',careExtra:[],days:{},notes:[],n
   form:{start:'09:00',end:'10:00',act:'',place:'',person:'',note:'',star:false,repeat:false}};
 const t=()=>L[S.cfg.lang]||L.nl;
 const dayCol=d=>(S.cfg.colors||DEFCOL)[d.getDay()]||DEFCOL[d.getDay()];
-const inkFor=hex=>{const n=parseInt(hex.slice(1),16),r=n>>16,g=n>>8&255,b=n&255;return (r*299+g*587+b*114)/1000>150?'#1d1a2e':'#ffffff'};
+const inkFor=hex=>{const n=parseInt(hex.slice(1),16),r=n>>16,g=n>>8&255,b=n&255;return (r*299+g*587+b*114)/1000>150?'#2b2118':'#ffffff'};
 const cv=d=>{const c=dayCol(d);return `--c:${c};--k:${inkFor(c)}`};
 const wakeM=(d=today())=>mins(S.days?.[key(d)]?.wake)??mins(S.cfg.wakeW?.[d.getDay()])??mins(S.cfg.wake)??420;
 const sleepM=(d=today())=>mins(S.days?.[key(d)]?.sleep)??mins(S.cfg.sleepW?.[d.getDay()])??mins(S.cfg.sleep)??1260;
@@ -325,8 +327,8 @@ const what=i=>actName(i.act)||S.places[i.place]?.name||'';
 const LINEIDS={};const tag=(txt,ids)=>{LINEIDS[txt]=ids;return txt};
 const colOf=i=>ACT[i.act]?.[1]||S.places[i.place]?.color||'#eee';
 function ava(p,extra=''){if(!p)return '';const c=p.color||'#ccc';
-  return p.photo?`<span class="ava ${extra}" style="--pc:${c}"><img src="${esc(p.photo)}" alt=""><i>${esc(p.animal||'')}</i></span>`:`<span class="ava ${extra}" style="--pc:${c}">${esc(p.animal||'🙂')}</span>`}
-const meP=()=>({animal:S.cfg.meAnimal||'⭐',photo:S.cfg.mePhoto||'',color:'#ffcc00'});
+  return p.photo?`<span class="ava ${extra}" style="--pc:${c}"><img src="${esc(p.photo)}" alt=""><i>${esc(p.animal||'')}</i></span>`:`<span class="ava ${extra}" style="--pc:${c}">${p.animal==='🐝'&&extra.includes('me')?'<img class="sym" src="bee.svg" alt="">':esc(p.animal||'🙂')}</span>`}
+const meP=()=>({animal:S.cfg.meAnimal||'🐝',photo:S.cfg.mePhoto||'',color:'#ffe680'});
 const ownerOf=pl=>pl&&pl.owner?S.people[pl.owner]:null;
 const ob=pl=>{const o=ownerOf(pl);return o?`<i class="ob" style="--oc:${o.color||'#fff'}">${o.photo?`<img src="${esc(o.photo)}" alt="">`:esc(o.animal||'')}</i>`:''};
 const plEmoji=pl=>pl.owner?'🏠':pl.emoji;
@@ -402,7 +404,7 @@ function render(){const T=t(),td=today();
   else if(cur)mid=symsOf(cur);
   else if(last&&S.places[last.place])mid=plTile(S.places[last.place]);
   else mid=`<span class="tile" style="--pc:#fff">☀️</span>`;
-  const nx=next&&n<sleepM()?`<span class="arr">➜</span><span class="nextbox">${symsOf(next)}</span>`:(n<sleepM()&&n>=wakeM()?`<span class="arr">➜</span><span class="nextbox"><span class="tile" style="--pc:#d9d4f0">🌙</span></span>`:'');
+  const nx=next&&n<sleepM()?`<span class="arr">➜</span><span class="nextbox">${symsOf(next)}</span>`:(n<sleepM()&&n>=wakeM()?`<span class="arr">➜</span><span class="nextbox"><span class="tile" style="--pc:#f0dfa6">🌙</span></span>`:'');
   const q=Math.ceil(((next?mins(next.start):sleepM())-n)/15);
   const q15=awake?`<span class="q15" aria-hidden="true">${[...Array(8)].map((_,i)=>`<i class="${i>=8-Math.min(q,8)?'on':''}"></i>`).join('')}</span>`:'';
   const nb=$('#now');nb.setAttribute('style',awake?cv(td):'--c:#2b2760;--k:#ffffff');nb.dataset.day=key(td);
@@ -534,7 +536,7 @@ function renderEd(){const T=t(),F=S.form,d=parse(S.sel),its=itemsAll(d);
     <div class="row" style="margin-top:12px"><button class="btn warn" data-dell="${p.id}">${T.del}</button></div></div>`).join('')+`<button class="btn" id="addL">${T.newPlace}</button>`}
   if(S.tab==='settings'){const cols=S.cfg.colors||DEFCOL;
     h=`<label class="f" for="cName">${T.herName}</label><input type="text" id="cName" value="${esc(S.cfg.name||'')}">
-    <label class="f">${T.herSym}</label><div class="row" style="margin-bottom:8px">${ava(meP(),'me')}</div><div class="pick">${ANIMALS.map(a=>`<button data-meanimal="${a}" ${pressed((S.cfg.meAnimal||'⭐')===a)}>${a}</button>`).join('')}</div>
+    <label class="f">${T.herSym}</label><div class="row" style="margin-bottom:8px">${ava(meP(),'me')}</div><div class="pick">${ANIMALS.map(a=>`<button data-meanimal="${a}" ${pressed((S.cfg.meAnimal||'🐝')===a)}>${a}</button>`).join('')}</div>
     <div class="row" style="margin-top:8px"><input type="file" accept="image/*" id="cPhoto">${S.cfg.mePhoto?`<button class="btn ghost" id="cRmPhoto">${T.rmphoto}</button>`:''}</div>
     <div class="row" style="margin-top:12px"><label>${T.wakeT}<br><input type="time" id="cWake" value="${hhmm(wakeM())}"></label><label>${T.sleepT}<br><input type="time" id="cSleep" value="${hhmm(sleepM())}"></label></div>
     <label class="f">${T.voice}</label><div class="pick">${(piperOK()?PIPER:[]).concat(voices.filter(v=>sc(v)>=9).map(v=>['local:'+v.voiceURI,'★ '+v.name])).concat(tts?CLAUDE_VOICES.map(v=>['claude:'+v,'Claude · '+v]):[],voices.filter(v=>sc(v)<9).map(v=>['local:'+v.voiceURI,v.name])).map(([id,n])=>`<button data-voice="${esc(id)}" ${pressed(curVoice()===id)}><span>▶ ${esc(n)}</span></button>`).join('')||`<p class="note">${T.novoice}</p>`}</div>
@@ -587,7 +589,7 @@ function renderEd(){const T=t(),F=S.form,d=parse(S.sel),its=itemsAll(d);
       <div class="row" style="margin-top:8px"><label>${T.sign}<br><input type="text" id="nSign" maxlength="40" value="${esc(sign)}" style="max-width:220px"></label><label>${T.forDay}<br><input type="date" id="nDay" style="max-width:200px"></label></div>
       <div class="row" style="margin-top:10px"><button class="btn" id="nPost">${T.post}</button><span class="note" id="fMsg"></span></div></div>`:''}
       ${S.notes.length?S.notes.map(msgHTML).join(''):`<p class="note">${T.noNotes}</p>`}`}
-  $('#edSheet').innerHTML=`<div class="sheet-h"><h2>👪</h2><button class="close" data-x="ed" aria-label="${T.close}">✕</button></div><div class="tabs">${tabs}</div>${S.canWrite===false?`<p class="note">${T.readonly}</p>`:''}${h}`;
+  $('#edSheet').innerHTML=`<div class="sheet-h"><h2 class="brand"><img src="icon-192.png" alt="" width="44" height="44">Bijtje</h2><button class="close" data-x="ed" aria-label="${T.close}">✕</button></div><div class="tabs">${tabs}</div>${S.canWrite===false?`<p class="note">${T.readonly}</p>`:''}${h}`;
 }
 function flash(m){const el=$('#fMsg');if(el)el.textContent=m}
 async function w(fn){try{await fn()}catch(e){flash(t().err)}}
