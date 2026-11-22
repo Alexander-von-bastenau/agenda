@@ -852,9 +852,10 @@ const FB={apiKey:"AIzaSyDnz1i5xpoNL34Bzqy0TeHBYy8-7FPaez4",authDomain:"agenda-de
   const uid=user.uid;S.me=uid;
   S.db=db;S.member=m;S.role=m.role;S.isAdmin=m.role==='admin';S.isOwner=S.isAdmin;S.canWrite=m.role==='admin'||m.role==='carer';
   $('#edit').hidden=m.role==='viewer';
-  let fresh=0;const timer=setTimeout(()=>{st.textContent=fresh?t().stale:t().offline},10000);
-  const done=snap=>{if(!snap.metadata.fromCache&&++fresh>=7){clearTimeout(timer);st.textContent=''}};
-  const fail=()=>{clearTimeout(timer);st.textContent=t().offline};
+  // "can it load" is decided by one real round trip to the server, not by counting snapshots (cached ones never repeat)
+  let got=0,live=false;const done=()=>{got++;if(live)st.textContent=''},fail=()=>{if(!live)st.textContent=got?t().stale:t().offline};
+  const ping=()=>db.doc('config/main').get({source:'server'}).then(()=>{live=true;st.textContent=''}).catch(()=>{live=false;st.textContent=got?t().stale:t().offline});
+  ping();setTimeout(()=>{if(!live)st.textContent=got?t().stale:t().offline},10000);addEventListener('online',ping);addEventListener('offline',()=>{live=false;st.textContent=t().stale});
   const toMap=s=>Object.fromEntries(s.docs.map(d=>[d.id,{id:d.id,...d.data()}]));
   db.collection('people').onSnapshot(s=>{S.people=toMap(s);render();done(s)},fail);
   db.collection('places').onSnapshot(s=>{S.places=toMap(s);render();done(s)},fail);
