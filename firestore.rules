@@ -29,6 +29,17 @@ service cloud.firestore {
       allow create: if canEdit() && request.resource.data.uid == request.auth.uid;
       allow update, delete: if isAdmin() || (canEdit() && resource.data.uid == request.auth.uid);
     }
+    match /chat/{id} {
+      allow read: if canEdit();
+      allow create: if canEdit() && request.resource.data.by == request.auth.uid;
+      allow delete: if isAdmin() || (canEdit() && resource.data.by == request.auth.uid);
+    }
+    match /docs/{id} {
+      allow read, write: if canEdit();
+      match /parts/{p} {
+        allow read, write: if canEdit();
+      }
+    }
     match /{col}/{id} {
       allow read: if isMember() && col in ['people', 'places', 'items', 'days', 'dates', 'notes'];
       allow write: if canEdit() && col in ['people', 'places', 'items', 'days', 'dates', 'notes'];
