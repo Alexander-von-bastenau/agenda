@@ -159,7 +159,7 @@ input[type=time]{max-width:160px}
 .q15 i{width:16px;height:16px;border-radius:50%;border:2px solid currentColor;opacity:.45}
 .q15 i.on{background:currentColor;opacity:1}
 .moons{font-size:30px;letter-spacing:2px}
-body.night{--bg:#12102a;--ink:#f1eeff;--soft:#2a2415;--line:#4a3f22}
+body.night{color-scheme:dark;--bg:#12102a;--ink:#f1eeff}
 body.night .board,body.night .wk-h .arrow,body.night .dots{opacity:.4}
 .day .stack .off{opacity:.5;filter:grayscale(1)}
 .day .stack .off::after,.blk.off .in::after{content:"✕";color:#e53935;font:800 1.2em/1 'Baloo 2',sans-serif}
@@ -246,7 +246,7 @@ body.night .board,body.night .wk-h .arrow,body.night .dots{opacity:.4}
  input[type=time]{max-width:130px}
  .special{font-size:16px;padding:8px 12px}.special .big{font-size:36px}.special .ava{width:44px;height:44px;font-size:26px}
 }
-input[type=email],input[type=password]{font:inherit;width:100%;box-sizing:border-box;padding:12px 14px;border:2px solid #f0dfa6;border-radius:14px;background:#fff;color:inherit}input[type=email]:focus,input[type=password]:focus{outline:3px solid #ffcc00;outline-offset:1px;border-color:#2b2118}
+input[type=email],input[type=password]{font:inherit;width:100%;box-sizing:border-box;padding:12px 14px;border:2px solid var(--line);border-radius:14px;background:var(--bg);color:inherit}input[type=email]:focus,input[type=password]:focus{outline:3px solid #ffcc00;outline-offset:1px;border-color:var(--ink)}
 .brand{display:flex;align-items:center;gap:10px;margin:0;font:800 26px/1 'Baloo 2',sans-serif}.brand img{border-radius:12px}
 .calrow{flex-wrap:wrap;gap:8px}.calrow .btn{min-height:44px;padding:0 14px;font-size:15px}
 .pill{display:inline-block;min-width:22px;padding:0 6px;border-radius:11px;background:#e53935;color:#fff;font-size:13px;line-height:22px;text-align:center}
