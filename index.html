@@ -267,7 +267,8 @@ input[type=file]::file-selector-button{font:inherit;font-weight:700;border:0;bor
 #toast.on{display:flex}#toast .btn{background:#ffcc00;color:#2b2118;min-height:44px;flex:none}
 .hello{font:800 30px/1.1 'Baloo 2',sans-serif;margin:4px 0 12px}.scr{font:800 24px/1.1 'Baloo 2',sans-serif;margin:0;flex:1;text-align:center}
 .backb{min-height:56px;font-size:18px;flex:none}
-.bigs{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin:14px 0}
+.bigs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}
+@media(max-width:640px){.bigs{grid-template-columns:1fr}}
 .bigb{display:flex;align-items:center;gap:14px;text-align:start;min-height:92px;padding:14px 18px;border-radius:22px;background:var(--soft);border:3px solid var(--line);font:inherit;color:inherit;cursor:pointer}
 .bigb .ic{font-size:40px;flex:none}.bigb b{display:block;font:800 22px/1.15 'Baloo 2',sans-serif}.bigb small{display:block;font-size:16px;opacity:.8;margin-top:2px}
 .bigb:active,.smb:active{transform:scale(.98)}
