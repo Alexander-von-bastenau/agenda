@@ -294,6 +294,7 @@ input[type=time]{max-width:none;min-width:9ch}
 .wkl .btn{white-space:nowrap;flex:none}.calrow.sub{padding:8px;border-radius:14px;background:var(--soft)}.calrow.sub .btn{background:var(--bg)}
 .calrow .btn[aria-pressed=true]{outline:3px solid var(--ink)}
 @media(max-width:760px){.scr{font-size:20px}.hello{font-size:26px}.bigb{min-height:84px}.bigb b{font-size:20px}}
+#edOv{background:var(--bg)}.hsp{width:96px;flex:none}@media(max-width:760px){.hsp{width:0}}
 </style>
 <script src="fb/firebase-app-compat.js"></script>
 <script src="fb/firebase-auth-compat.js"></script>
@@ -633,7 +634,7 @@ function renderEd(){const T=t(),F=S.form,d=parse(S.sel),its=itemsAll(d);
     <label class="f" for="cLang">${T.lang}</label><select id="cLang">${[['nl','Nederlands'],['es','Español'],['en','English']].map(([k,n])=>`<option value="${k}" ${(S.cfg.lang||'nl')===k?'selected':''}>${n}</option>`).join('')}</select>
     <label class="f">${T.dayColors}</label><div class="daycols">${[1,2,3,4,5,6,0].map(i=>`<label><input type="color" data-dcol="${i}" value="${cols[i]}">${T.days[i]}</label>`).join('')}</div>`}
   if(S.tab==='overview'){const td=today(),base=addD(td,-((td.getDay()+6)%7)+S.ovWk*7);
-    h=`<div class="navrow" style="margin-bottom:12px"><button class="btn ghost" data-ovstep="-1">◀</button><b style="flex:1;text-align:center">${T.week} ${longDate(base)}</b><button class="btn ghost" data-ovstep="1">▶</button></div><div class="ovw">`+[...Array(7)].map((_,n)=>{const d=addD(base,n),k=key(d),g=segs(itemsFor(d)),ns=S.notes.filter(x=>x.day===k);
+    h=`<button class="btn ghost viewb" data-x="ed" style="margin:0 0 14px">👁️ ${T.hView}</button><div class="navrow" style="margin-bottom:12px"><button class="btn ghost" data-ovstep="-1">◀</button><b style="flex:1;text-align:center">${T.week} ${longDate(base)}</b><button class="btn ghost" data-ovstep="1">▶</button></div><div class="ovw">`+[...Array(7)].map((_,n)=>{const d=addD(base,n),k=key(d),g=segs(itemsFor(d)),ns=S.notes.filter(x=>x.day===k);
       return `<section class="ovd${k===key(td)?' today':''}" style="${cv(d)}"><span class="bar"></span><div><h3><span>${cap(T.days[d.getDay()])} ${d.getDate()} ${T.mon[d.getMonth()]} <small class="note">☀️ ${hhmm(wakeM(d))} · 🌙 ${hhmm(sleepM(d))}</small>${datesFor(d).map(x=>`<br>${esc(x.emoji||'🎂')} ${esc(x.name)}`).join('')}</span>${S.canWrite?`<span class="row" style="gap:6px"><button class="btn ghost" data-planday="${k}">✏️ ${T.plan}</button><button class="btn ghost" data-noteday="${k}">📝</button></span>`:''}</h3>
       ${g.length?g.map(x=>{const pl=S.places[x.place],ppl=[...new Set(x.people)].map(id=>S.people[id]?.name).filter(Boolean),notes=x.items.map(i=>i.note).filter(Boolean);
         return `<div class="seg"><time>${esc(x.start)}–${esc(x.end)}</time><span><span class="mini">${pl?plTile(pl):''}${[...new Set(x.items.map(i=>i.act).filter(Boolean))].map(a=>tile(a,ACT[a]?.[1]||'#fff')).join('')}</span><b>${esc(pl?cap(plSay(x.place)):'')}</b>${ppl.length?` · ${esc(ppl.join(', '))}`:''}${x.acts.length?` · ${esc(x.acts.join(', '))}`:''}${notes.length?`<br><span class="note">${esc(notes.join(' · '))}</span>`:''}</span></div>`}).join(''):`<p class="note" style="margin:0">${T.nothingDay}</p>`}
@@ -698,7 +699,7 @@ function renderEd(){const T=t(),F=S.form,d=parse(S.sel),its=itemsAll(d);
       <div class="row" style="margin-top:10px"><button class="btn" id="nPost">${T.post}</button><span class="note" id="fMsg"></span></div></div>`:''}
       ${S.notes.length?S.notes.map(msgHTML).join(''):`<p class="note">${T.noNotes}</p>`}`}
   const title={care:T.hCare,overview:T.hWeek,chat:T.hChat,docs:T.hDocs}[S.tab]||T[S.tab]||'';
-  $('#edSheet').innerHTML=`<div class="sheet-h">${S.tab==='home'?`<h2 class="brand"><img src="icon-192.png" alt="" width="44" height="44">Bijtje</h2>`:`<button class="btn ghost backb" data-tab="home">‹ ${T.back}</button><h2 class="scr">${title}</h2>`}<button class="close" data-x="ed" aria-label="${T.hView}">✕</button></div>${S.canWrite===false&&S.tab!=='home'?`<p class="note">${T.readonly}</p>`:''}${h}`;
+  $('#edSheet').innerHTML=`<div class="sheet-h">${S.tab==='home'?`<h2 class="brand"><img src="icon-192.png" alt="" width="44" height="44">Bijtje</h2>`:`<button class="btn ghost backb" data-tab="home">‹ ${T.back}</button><h2 class="scr">${title}</h2>`}${S.tab==='home'?'':'<span class="hsp"></span>'}</div>${S.canWrite===false&&S.tab!=='home'?`<p class="note">${T.readonly}</p>`:''}${h}`;
   if(S.lastTab!==S.tab){S.lastTab=S.tab;$('#edSheet').scrollTop=0;$('#edOv').scrollTop=0}
   const cb=$('#chatBox');if(cb)cb.scrollTop=cb.scrollHeight;
   S.edDirty=false;
