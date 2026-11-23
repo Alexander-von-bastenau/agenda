@@ -281,6 +281,9 @@ input[type=file]::file-selector-button{font:inherit;font-weight:700;border:0;bor
 .slot{padding:10px 0;border-top:1px dashed var(--line)}.slot:first-of-type{border-top:0}.slot .ava{width:48px;height:48px;font-size:28px;border-width:3px}
 .slotform{margin:8px 0;border-color:var(--ink)}
 .preview{margin-top:14px;padding:12px;border-radius:16px;background:var(--soft)}.preview .row{margin-top:8px;align-items:center}.preview .ava,.preview .tile{width:52px;height:52px;font-size:30px;border-width:3px}
+.vbar{margin-top:10px;font-size:15px}.vbar>div{display:flex;justify-content:space-between;gap:8px;font-weight:700}.vbar i{display:block;height:12px;border-radius:6px;background:var(--soft);overflow:hidden;margin-top:4px}.vbar i b{display:block;height:100%;background:#4caf50;border-radius:6px}.vbar.near i b{background:#f5a623}.vbar.full i b{background:#e53935}.vbar small{display:block;margin-top:4px;font-weight:700}
+.lognudge{background:light-dark(#fff3c4,#4a3f10);border-color:#f5c518}
+.vrow .grow{flex-basis:100%}.vrow .btn{flex:none}.vrow .btn.warn{margin-inline-start:auto}.vtot{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;text-align:center}.vtot div{background:var(--soft);border-radius:14px;padding:10px 6px}.vtot b{display:block;font-size:20px}
 .warnline{margin:14px 0 0;padding:10px 12px;border-radius:12px;background:light-dark(#fde7e4,#4a1f1b);font-weight:700}
 .btn.asking{background:#b3261e!important;color:#fff!important}
 .row .btn.warn{margin-inline-start:auto}
@@ -349,6 +352,9 @@ const NW={pwShow:'Toon',pwHide:'Verberg',pwHint:'Minstens 6 letters of cijfers. 
 slotAdd:'＋ Ik neem Deborah mee op deze dag',slotHelp:'Vul in van wanneer tot wanneer Deborah bij jou is. Dat hoeft geen hele dag te zijn: meerdere mensen kunnen elk een stuk van de dag nemen.',slotFrom:'Deborah is bij mij van',slotTo:'tot',slotWhere:'Waar zijn jullie dan?',slotMore:'Ophalen en terugbrengen invullen',slotLess:'Ophalen en terugbrengen: niet ingevuld',slotSee:'Dit ziet en hoort Deborah',slotHear:'Luister',slotYes:'Ja, ik doe het',slotSave:'Opslaan',slotCancel:'Annuleren',slotEdit:'Wijzigen',slotNo:'Ik kan toch niet',slotBusy:(n,f,t2)=>`Op dat uur is Deborah al bij ${n} (${f}–${t2}). Kies een ander uur.`,slotMoreBtn:'Agenda of mail',slotTell:'Laat het de familie weten',slotOk:d=>`Gelukt. ${d} staat in de agenda van Deborah.`,slotGone:'Je bent uitgeschreven.',slotNone:'Nog niemand',
 invOpen:'Nog niet gebruikt',mbRmSure:'Zeker? Tik nog eens om de toegang stop te zetten',cancelB:'Annuleren',mailVia:'E-mails vanuit Bijtje versturen met',mailG:'Gmail (op internet)',mailA:'Het mailprogramma van dit toestel',mailHelp:'Bijtje opent een bericht dat al klaarstaat; jij drukt op verzenden. Met Gmail vertrekt het vanaf het adres waarmee je hier bent aangemeld.',invGo:'Uitnodigen',invShare:'Doorsturen (WhatsApp…)',invSent:'De uitnodiging is gemaakt en het bericht staat klaar: je hoeft alleen nog op verzenden te drukken.',mbSeen:'Bijtje laatst geopend',mbNever:'nog nooit geopend sinds deze update',mbDev:'Gsm, tablet of computer',mbRole:'Wat mag deze persoon?',mbSelf:'Je eigen toegang kun je hier niet wijzigen, zodat er altijd een beheerder blijft.',mbToday:'vandaag',mbYest:'gisteren',mbAgo:n=>`${n} dagen geleden`,mbApp:'als app',mbNoLogin:'zonder login (link)',mbRm:'Toegang stopzetten',mbHelp:'Hier zie je wie toegang heeft, op welk toestel en wanneer Bijtje daar het laatst geopend is. Tik op een soort toegang om die te wijzigen.',dcWho:'Wie mag dit document zien?',dcAll:'Iedereen van de familie',dcSeen:'Zichtbaar voor',dcOnlyMe:'alleen ik',dcEdit:'Wijzigen',dcDone:'Klaar',dcAdm:'Wie het document oplaadde en de beheerder (Jeffrey) zien het altijd.',chat:'Chat',docs:'Documenten',chPh:'Schrijf een bericht voor de familie…',chSend:'Verstuur',chNone:'Nog geen berichten. Schrijf het eerste!',chHelp:'Alleen de familie en begeleiders zien deze chat. Op de tablet van Deborah is hij niet zichtbaar.',dcHelp:'Bewaar hier belangrijke documenten van Deborah (bv. identiteitskaart, mutualiteit, medicatielijst). Alleen familie en begeleiders met een login kunnen ze zien.',dcAdd:'Document toevoegen',dcName:'Naam van het document',dcBig:'Dit document is te zwaar (maximaal 8 MB). Neem een foto in plaats van een scan, of vraag Jeffrey.',dcBusy:(a,b)=>`Bezig met opladen… ${a}/${b}`,dcLoad:'Bezig met ophalen…',dcNone:'Nog geen documenten.',dcView:'Bekijken',dcDown:'Bewaren op dit toestel',dcShare:'Doorsturen',dcAgain:'Het document is klaar. Tik nog eens op “Doorsturen”.',dcNoShare:'Doorsturen lukt niet op dit toestel. Het document is gedownload; je kunt het als bijlage versturen.',mustT:n=>`Dag ${n}!`,mustP:'Vanaf nu heeft iedereen een eigen login nodig. Vul je e-mailadres in en kies een wachtwoord (minstens 6 tekens). Dat hoeft maar één keer.',mustUsed:'Dit e-mailadres heeft al een login. Vraag Jeffrey om hulp.',swT:n=>`Deze uitnodiging is voor ${n}`,swP:n=>`Op dit toestel ben je nu aangemeld als ${n}.`,swGo:n=>`Afmelden en login maken voor ${n}`,swStay:n=>`Verder als ${n}`,pickAt:'Ik haal Deborah op bij',dropAt:'Ik breng Deborah terug naar',pickL:'Ophalen bij',dropL:'Terugbrengen naar',calG:'Google Agenda',calI:'Apple / Outlook',calMail:'Laat het de familie weten',calTitle:(n,w)=>`${n} bij ${w}`,calPlace:'Plaats',calNoMail:'Nog niemand heeft een e-mailadres in Bijtje.',calMailSubj:(n,w,d)=>`Bijtje: ${w} zorgt voor ${n} op ${d}`,calMailBody:(n,w,d,f,to,lines,g,app)=>`Dag allemaal,\n\n${w} zorgt op ${d} van ${f} tot ${to} voor ${n}.\n${lines.join('\n')}\n\nZet het in je agenda:\n• Google Agenda: ${g}\n• Apple of Outlook: open Bijtje, ga naar “Wie zorgt wanneer” en tik op 📅 Apple / Outlook.\n\nBijtje: ${app}\n\nFijne dag nog!`,insT:'📲 Zet Bijtje op je startscherm',insBtn:'Installeer als app',insDone:'Bijtje staat al als app op dit toestel.',insIos:'iPhone of iPad: open deze pagina in Safari, tik op het deel-icoon (vierkantje met pijl omhoog) en kies “Zet op beginscherm”.',insOther:'Computer (Chrome of Edge): klik rechts in de adresbalk op het installeer-icoon, of open het menu ⋮ en kies “Installeren”. Android: menu ⋮ en dan “App installeren” of “Toevoegen aan startscherm”.',account:'Mijn toegang',auHi:n=>`Dag ${n}!`,auNew:'Kies hier je eigen wachtwoord voor Bijtje, de agenda van Deborah.',auLogin:'Aanmelden',auLoginP:'Deze agenda is privé. Meld je aan met je e-mailadres en wachtwoord.',auEmail:'E-mailadres',auPw:'Wachtwoord',auPwNew:'Kies een wachtwoord',auCreate:'Kies mijn wachtwoord',auIn:'Aanmelden',auForgot:'Wachtwoord vergeten?',auSent:'Als dit adres een login heeft, staat er nu een mail in je inbox (kijk ook bij spam). Via de link kies je een nieuw wachtwoord.',auNeedE:'Vul eerst je e-mailadres in.',auBad:'E-mailadres of wachtwoord klopt niet. Probeer opnieuw, of tik op “Wachtwoord vergeten?”.',auWeak:'Het wachtwoord moet minstens 6 tekens hebben.',auErr:'Dat lukte niet. Probeer het nog eens.',auNoInv:'Nog geen login? Vraag aan Jeffrey een uitnodiging.',acAs:'Je bent aangemeld als',acNone:'Dit toestel heeft toegang via een link, zonder login. Maak een login, dan kun je ook op een ander toestel aanmelden en raak je je toegang niet kwijt.',acMake:'Kies mijn wachtwoord',acReset:'Stuur me een mail om mijn wachtwoord te veranderen',acOut:'Afmelden',invEmail:'E-mailadres (voor de uitnodiging en de login)',mailIt:'Stuur e-mail',resetFor:'Stuur mail voor nieuw wachtwoord',resetDone:'Reset-mail verstuurd',mailSubj:'Bijtje: jouw toegang tot de agenda van Deborah',mailBody:(n,l)=>`Dag ${n},\n\nMet deze link maak je je eigen login voor Bijtje, de agenda van Deborah:\n${l}\n\nOpen de link, kies een wachtwoord en je bent binnen. Daarna kun je altijd aanmelden met je e-mailadres en wachtwoord.\n\nGroetjes,\nJeffrey`,care:'Wie zorgt wanneer',family:'Familie',careHelp:'Kies de dagen waarop jij voor Deborah zorgt. Wie eerst kiest, heeft de dag. Het komt meteen in haar agenda.',take:'Ik neem deze dag',release:'Vrijgeven',free:'Nog vrij',confirm:'Bevestigen',otherDay:'Een andere dag toevoegen',taken:'Deze dag is net door iemand anders genomen.',members:'Wie heeft toegang',invites:'Uitnodigingen',newInv:'Iemand uitnodigen',invName:'Naam (bv. Tante Mieke, of “Tablet Deborah”)',invRole:'Wat mag deze persoon?',r_admin:'Beheerder (alles)',r_carer:'Familie (plannen en berichtjes)',r_viewer:'Alleen kijken (tablet van Deborah)',invPerson:'Welke persoon in de agenda is dit?',mkLink:'Maak link',copy:'Kopieer',copied:'Gekopieerd',remove:'Toegang weg',you:'jij',noInv:'Nog geen links.',gateT:'Deze agenda is privé',gateP:'Vraag aan Jeffrey een persoonlijke link en open die op dit toestel.',invHelp:'Stuur elke persoon zijn eigen uitnodiging. Wie de link opent, maakt een login met e-mailadres en wachtwoord. De tablet van Deborah (alleen kijken) heeft geen login nodig.'};
 for(const k in L)Object.assign(L[k],NW);
+const VL={hLog:'Hoe was het met Deborah?',hLogS:'Vertel kort wat jullie deden en of je kosten had. Zo blijft alles netjes bijgehouden.',logFill:'Invullen',log:'Mijn uren en kosten',vol:'Uren en kosten',lWhen:'Wanneer was Deborah bij jou?',lFrom:'Van',lTo:'tot',lDid:'Wat hebben jullie gedaan?',lDidPh:'bv. gewandeld, samen gekookt, naar de markt…',lKm:'Hoeveel kilometer heb je voor Deborah gereden? (mag leeg)',lCost:'Heb je iets betaald voor Deborah? Hoeveel euro? (mag leeg)',lCostNote:'Waarvoor was dat? (mag leeg)',lWants:'Wil je je kosten terugkrijgen?',lYes:'Ja, graag',lNo:'Nee, dat hoeft niet',lSave:'Bewaren',lNeedW:'Kies nog of je je kosten wil terugkrijgen.',lThanks:'Dank je wel! Het is bewaard.',lMine:'Wat ik al invulde',lNone:'Je hebt nog niets ingevuld.',lOk:'nagekeken ✓',lWait:'nog na te kijken',lLocked:'Dit is al nagekeken door Jeffrey. Vraag het hem als er iets moet veranderen.',
+vHelp:'Alleen jij ziet deze pagina. Familie en vrijwilligers zien enkel wat ze zelf invulden.',vOpen:'Nog niet ingevuld',vRemind:'Stuur herinnering',vFillSelf:'Zelf invullen',vApprove:'Goedkeuren',vApproved:'✓ Goedgekeurd',vTimes:n=>`${n} keer`,vHours:'uren',vPay:'Te betalen',vPayOk:'te betalen (goedgekeurd)',vCosts:'kosten',vWaitN:n=>`${n} nog na te kijken`,vForf:'Forfait',vKmL:'Kilometers',vNear:'Bijna aan het maximum.',vFull:'Maximum bereikt. Wat erboven komt wordt niet uitbetaald; de uren blijven wel op naam van deze persoon staan.',vCsv:'⬇️ Download deze maand (Excel)',vRules:'Regels voor de vergoeding',vMode:'Hoe vergoed je?',vForfM:'Vast bedrag per dag',vRealM:'Werkelijke kosten (met bewijs)',vDay:'Bedrag per dag (€)',vDayMax:'Maximum per dag (€)',vYearMax:'Maximum per jaar (€)',vKmRate:'Per kilometer (€)',vKmMax:'Maximum kilometers per jaar',vRulesNote:'De maxima die hier staan zijn de wettelijke bedragen van 2026 voor vrijwilligers. Kijk ze na bij de vrijwilligersorganisatie voor je uitbetaalt. Het bedrag per dag vul je zelf in.',vNoLogs:'Deze maand is nog niets ingevuld.',vAdd:'＋ Een bezoek toevoegen',vWho:'Wie?',vOver:'boven het maximum',vNotPaid:'kosten niet terugbetaald bij een vast bedrag',vNoWant:'wil niets terug',vMailSubj:'Bijtje: hoe was het met Deborah?',vMailBody:(n,d,l)=>`Dag ${n},\n\nBedankt om ${d} voor Deborah te zorgen! Wil je even invullen hoe het was (wat jullie deden, kilometers, kosten)? Het duurt één minuutje:\n${l}\n\nGroetjes,\nJeffrey`};
+for(const k in L)Object.assign(L[k],VL);
 const cap=x=>x?x[0].toUpperCase()+x.slice(1):x;
 const S={claims:{},members:{},invites:[],role:'',careExtra:[],days:{},notes:[],names:{},me:null,isOwner:false,user:null,ovWk:0,editing:null,people:{},places:{},items:[],cfg:{},wk:0,canWrite:false,db:null,tab:'home',sel:key(today()),open:null,
   form:{start:'09:00',end:'10:00',act:'',place:'',person:'',note:'',star:false,repeat:false}};
@@ -582,19 +588,88 @@ async function docUpload(file){const T=t();if(file.size>8*1048576){flash(T.dcBig
 function msgHTML(m){const T=t(),who=m.sign||S.names[m.by]||T.someone,when=m.at?new Date(m.at):null,dd=m.day?parse(m.day):null;
   const mine=m.by&&m.by===S.me||S.isOwner;
   return `<article class="msg"><header><span>${dd?`<span class="tag" style="${cv(dd)}">${T.days[dd.getDay()]} ${dd.getDate()}/${dd.getMonth()+1}</span>`:''}<b>${esc(who)}</b></span><span>${when?`${when.getDate()}/${when.getMonth()+1} ${pad(when.getHours())}:${pad(when.getMinutes())}`:''}${mine&&S.canWrite!==false?` <button class="btn ghost" style="min-height:36px;padding:0 10px" data-delnote="${esc(m.id)}">✕</button>`:''}</span></header><p>${esc(m.text)}</p></article>`}
+// ---------- after-visit log (family) and hours/costs report (admin only) ----------
+const VDEF={mode:'forfait',day:0,dayMax:44.02,yearMax:1760.83,kmRate:0.4326,kmMax:2000};
+const vcfg=()=>({...VDEF,...(S.cfg.vol||{})});
+const num=v=>{const n=parseFloat(String(v??'').replace(',','.'));return isFinite(n)&&n>0?n:0};
+const eur=n=>'€ '+(Math.round(n*100)/100).toFixed(2).replace('.',',');
+const n1=n=>String(Math.round(n*10)/10).replace('.',',');
+const c2=n=>Math.round(n*100)/100;
+const hrs=l=>Math.max(0,(mins(l.to)-mins(l.from))/60);
+const hfmt=h=>{const m=Math.round(h*60);return `${Math.floor(m/60)} u ${pad(m%60)}`};
+const dayL=k=>{const d=parse(k),T=t();return `${cap(T.days[d.getDay()])} ${d.getDate()} ${T.mon[d.getMonth()]}`};
+const logOf=cid=>(S.logs||[]).find(l=>l.id===cid);
+const claimEnded=c=>c.date<key(today())||(c.date===key(today())&&mins(c.to)<=nowMin());
+const myOpen=()=>S.logs?(S.claimList||[]).filter(c=>c.uid===S.me&&claimEnded(c)&&!logOf(c.id)&&c.date>=key(addD(today(),-60))).sort((a,b)=>a.date<b.date?1:-1):[];
+function logStart(cid,id){const c=cid?claimBy(cid):null,l=id?(S.logs||[]).find(x=>x.id===id):cid?logOf(cid):null;
+  S.lform=l?{id:l.id,cid:l.claim||'',uid:l.uid,name:l.name||'',date:l.date,from:l.from,to:l.to,did:l.did||'',km:l.km?String(l.km).replace('.',','):'',cost:l.cost?String(l.cost).replace('.',','):'',costNote:l.costNote||'',wants:!!l.wants,status:l.status,at:l.at}
+    :{id:cid||'',cid:cid||'',uid:c?c.uid:S.me,name:c?c.name||'':S.member?.name||'',date:c?c.date:key(today()),from:c?c.from:'10:00',to:c?c.to:'18:00',did:'',km:'',cost:'',costNote:'',wants:null,status:'new'};
+  if(S.tab!=='log')S.lback=S.tab;S.tab='log'}
+function logLink(){let id='';try{id=sessionStorage.getItem('bijtje-log')||''}catch(e){}if(!id||!S.canWrite||!S.logs)return;const c=claimBy(id);if(!c)return;
+  try{sessionStorage.removeItem('bijtje-log')}catch(e){}if(c.uid!==S.me&&!S.isAdmin)return;S.tab='home';logStart(id);openEd('log')}
+function logNudge(){const T=t(),o=myOpen().slice(0,3);if(!o.length)return '';
+  return `<div class="card lognudge"><b>📝 ${T.hLog}</b><p class="note" style="margin:4px 0 2px">${T.hLogS}</p>${o.map(c=>`<div class="row" style="margin-top:8px"><span class="grow">${esc(dayL(c.date))} · ${esc(c.from)}–${esc(c.to)}</span><button class="btn" data-logfor="${esc(c.id)}">${T.logFill}</button></div>`).join('')}</div>`}
+function logHTML(){const T=t(),LF=S.lform;
+  if(LF){if(LF.status==='ok'&&!S.isAdmin)return `<p class="warnline">${T.lLocked}</p><button class="btn ghost" id="lCancel" style="margin-top:14px">${T.back}</button>`;
+    const carers=Object.entries(S.members).filter(([,m])=>m.role!=='viewer').sort((a,b)=>String(a[1].name).localeCompare(b[1].name));
+    return `<div class="card">${LF.cid?`<p style="margin:0;font-size:18px"><b>${esc(dayL(LF.date))}</b>${LF.uid!==S.me?` · ${esc(LF.name)}`:''}</p>`:`${S.isAdmin?`<label class="f" style="margin-top:0" for="lWho">${T.vWho}</label><select id="lWho">${carers.map(([id,m])=>`<option value="${esc(id)}" ${id===LF.uid?'selected':''}>${esc(m.name||'')}</option>`).join('')}</select>`:''}<label class="f" for="lDate">${T.date}</label><input type="date" id="lDate" value="${esc(LF.date)}" max="${key(today())}" style="max-width:220px">`}
+      <label class="f">${T.lWhen}</label><div class="row" style="gap:12px;align-items:end"><label>${T.lFrom}<br><input type="time" id="lFrom" value="${esc(LF.from)}"></label><label>${T.lTo}<br><input type="time" id="lTo" value="${esc(LF.to)}"></label></div>
+      <label class="f" for="lDid">${T.lDid}</label><textarea id="lDid" rows="3" placeholder="${T.lDidPh}">${esc(LF.did)}</textarea>
+      <label class="f" for="lKm">${T.lKm}</label><input type="text" inputmode="decimal" id="lKm" value="${esc(LF.km)}" style="max-width:160px">
+      <label class="f" for="lCost">${T.lCost}</label><input type="text" inputmode="decimal" id="lCost" value="${esc(LF.cost)}" style="max-width:160px">
+      <label class="f" for="lCostNote">${T.lCostNote}</label><input type="text" id="lCostNote" value="${esc(LF.costNote)}">
+      <label class="f">${T.lWants}</label><div class="pick"><button data-lwants="1" ${pressed(LF.wants===true)}><span>${T.lYes}</span></button><button data-lwants="0" ${pressed(LF.wants===false)}><span>${T.lNo}</span></button></div>
+      <div class="row" style="margin-top:16px"><button class="btn" id="lSave">${T.lSave}</button><button class="btn ghost" id="lCancel">${T.slotCancel}</button><span class="note" id="fMsg"></span></div></div>`}
+  const o=myOpen(),mine=(S.logs||[]).filter(l=>l.uid===S.me).sort((a,b)=>a.date<b.date?1:-1).slice(0,40);
+  return `<p class="note">${T.hLogS}</p>${o.map(c=>`<div class="li"><span class="grow"><b>${esc(dayL(c.date))}</b> · ${esc(c.from)}–${esc(c.to)}</span><button class="btn" data-logfor="${esc(c.id)}">${T.logFill}</button></div>`).join('')}
+    <button class="btn ghost" id="lNew" style="margin:6px 0 4px">${T.vAdd}</button><h3 class="sec">${T.lMine}</h3>
+    ${mine.length?mine.map(l=>`<div class="li"><span class="grow"><b>${esc(dayL(l.date))}</b> · ${esc(l.from)}–${esc(l.to)}${l.did?`<br>${esc(l.did)}`:''}<br><span class="note">${[num(l.km)?`${n1(num(l.km))} km`:'',num(l.cost)?eur(num(l.cost)):'',l.status==='ok'?T.lOk:T.lWait].filter(Boolean).join(' · ')}</span></span>${l.status==='ok'?'':`<button class="btn ghost" data-logedit="${esc(l.id)}">✏️ ${T.slotEdit}</button>`}</div>`).join(''):`<p class="note">${T.lNone}</p>`}`}
+// one pass over a calendar year, oldest first, so the yearly maxima fill up in the order things happened
+function volYear(y){const V=vcfg(),out={},ls=(S.logs||[]).filter(l=>String(l.date).startsWith(y+'-')).sort((a,b)=>a.date+a.from<b.date+b.from?-1:1);
+  for(const l of ls){const p=out[l.uid]=out[l.uid]||{uid:l.uid,name:S.members[l.uid]?.name||l.name||t().someone,forf:0,km:0,dayF:{},rows:[]};
+    const km=num(l.km),cost=num(l.cost),r={l,h:hrs(l),km,cost,f:0,kmAmt:0,real:0,over:0,kmOver:0};
+    if(l.wants){const kp=Math.max(0,Math.min(km,V.kmMax-p.km));r.kmOver=c2(km-kp);r.kmAmt=c2(kp*V.kmRate);p.km+=kp;
+      if(V.mode==='real')r.real=cost;
+      else{const want=Math.max(0,Math.min(V.day,V.dayMax)-(p.dayF[l.date]||0));r.f=c2(Math.max(0,Math.min(want,V.yearMax-p.forf)));r.over=c2(want-r.f);p.forf=c2(p.forf+r.f);p.dayF[l.date]=(p.dayF[l.date]||0)+r.f}}
+    r.pay=c2(r.f+r.kmAmt+r.real);p.rows.push(r)}
+  return out}
+const volMonth=ym=>Object.values(volYear(ym.slice(0,4))).map(p=>({...p,m:p.rows.filter(r=>r.l.date.startsWith(ym))})).filter(p=>p.m.length).sort((a,b)=>a.name.localeCompare(b.name));
+function volCsv(){const ym=S.vMonth,T=t(),q=v=>'"'+String(v??'').replace(/"/g,'""')+'"',d=n=>String(c2(n)).replace('.',',');
+  const rows=[['Datum','Naam','Van','Tot','Uren','Wat gedaan','Km','Kosten','Waarvoor','Wil kosten terug','Forfait','Km-vergoeding','Werkelijke kosten','Te betalen','Forfait boven maximum','Km boven maximum','Status']];
+  for(const p of volMonth(ym))for(const r of p.m)rows.push([r.l.date,p.name,r.l.from,r.l.to,d(r.h),r.l.did||'',d(r.km),d(r.cost),r.l.costNote||'',r.l.wants?'ja':'nee',d(r.f),d(r.kmAmt),d(r.real),d(r.pay),d(r.over),d(r.kmOver),r.l.status==='ok'?'goedgekeurd':'na te kijken']);
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['﻿'+rows.map(r=>r.map(q).join(';')).join('\r\n')],{type:'text/csv;charset=utf-8'}));a.download='bijtje-uren-'+ym+'.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000)}
+function volHTML(){const T=t(),V=vcfg(),ym=S.vMonth=S.vMonth||key(today()).slice(0,7),y=ym.slice(0,4),ppl=volMonth(ym),all=ppl.flatMap(p=>p.m);
+  const open=(S.claimList||[]).filter(c=>c.date.startsWith(ym)&&claimEnded(c)&&!logOf(c.id)).sort((a,b)=>a.date<b.date?-1:1);
+  const sum=(a,f)=>a.reduce((x,r)=>x+f(r),0),ok=a=>a.filter(r=>r.l.status==='ok');
+  const bar=(v,max,lab,fmt)=>{const pc=max>0?Math.min(100,v/max*100):0,st=pc>=100?'full':pc>=80?'near':'';return `<div class="vbar ${st}"><div><span>${lab}</span><span>${fmt(v)} / ${fmt(max)}</span></div><i><b style="width:${pc.toFixed(1)}%"></b></i>${st?`<small>${st==='full'?T.vFull:T.vNear}</small>`:''}</div>`};
+  const row=r=>{const l=r.l,bits=[hfmt(r.h),r.km?`${n1(r.km)} km`:'',r.cost?`${eur(r.cost)}${l.costNote?` (${esc(l.costNote)})`:''}`:''].filter(Boolean),
+      pay=!l.wants?T.vNoWant:[r.f?`${T.vForf.toLowerCase()} ${eur(r.f)}`:'',r.kmAmt?`km ${eur(r.kmAmt)}`:'',r.real?`${T.vCosts} ${eur(r.real)}`:'',r.over>0?`⚠️ ${eur(r.over)} ${T.vOver}`:'',r.kmOver>0?`⚠️ ${n1(r.kmOver)} km ${T.vOver}`:'',V.mode!=='real'&&r.cost?T.vNotPaid:''].filter(Boolean).join(' · ');
+    return `<div class="li vrow"><span class="grow"><b>${esc(dayL(l.date))}</b> · ${esc(l.from)}–${esc(l.to)}<br>${l.did?esc(l.did)+'<br>':''}<span class="note">${bits.join(' · ')}</span><br><span class="note">${T.vPay}: <b>${eur(r.pay)}</b>${pay?` (${pay})`:''}</span></span>
+      <button class="btn ${l.status==='ok'?'ghost':''}" data-logok="${esc(l.id)}">${l.status==='ok'?T.vApproved:T.vApprove}</button><button class="btn ghost" data-logedit="${esc(l.id)}" aria-label="${T.slotEdit}">✏️</button><button class="btn warn" data-dellog="${esc(l.id)}" aria-label="${T.del}">🗑️</button></div>`};
+  const inp=(k,lab)=>`<label class="f">${lab}</label><input type="text" inputmode="decimal" data-vset="${k}" value="${String(V[k]).replace('.',',')}" style="max-width:160px">`;
+  return `<p class="note">${T.vHelp}</p>
+    <div class="navrow"><button class="btn ghost" data-vstep="-1" aria-label="◀">◀</button><b class="grow" style="text-align:center;font-size:20px">${cap(parse(ym+'-01').toLocaleDateString('nl-BE',{month:'long',year:'numeric'}))}</b><button class="btn ghost" data-vstep="1" aria-label="▶">▶</button></div>
+    <div class="card vtot" style="margin-top:12px"><div><b>${all.length}</b>${T.vTimes('').trim()}</div><div><b>${hfmt(sum(all,r=>r.h))}</b>${T.vHours}</div><div><b>${n1(sum(all,r=>r.km))}</b>km</div><div><b>${eur(sum(ok(all),r=>r.pay))}</b>${T.vPayOk}</div></div>
+    ${open.length?`<div class="card lognudge"><b>⏳ ${T.vOpen} (${open.length})</b>${open.map(c=>`<div class="row" style="margin-top:10px"><span class="grow"><b>${esc(S.members[c.uid]?.name||c.name||T.someone)}</b> · ${esc(dayL(c.date))} · ${esc(c.from)}–${esc(c.to)}</span><button class="btn ghost" data-logmail="${esc(c.id)}">✉️ ${T.vRemind}</button><button class="btn ghost" data-logfor="${esc(c.id)}">${T.vFillSelf}</button></div>`).join('')}</div>`:''}
+    ${ppl.map(p=>{const w8=p.m.length-ok(p.m).length;return `<div class="card"><div class="row"><b class="grow" style="font-size:19px">${esc(p.name)}</b><span style="text-align:end;margin-inline-start:auto"><b style="font-size:19px">${eur(sum(ok(p.m),r=>r.pay))}</b><br><span class="note">${T.vPayOk}</span></span></div>
+      <p class="note" style="margin:4px 0 10px">${T.vTimes(p.m.length)} · ${hfmt(sum(p.m,r=>r.h))} · ${n1(sum(p.m,r=>r.km))} km · ${eur(sum(p.m,r=>r.cost))} ${T.vCosts}${w8?` · ${T.vWaitN(w8)}`:''}</p>
+      ${p.m.map(row).join('')}${V.mode!=='real'?bar(p.forf,V.yearMax,`${T.vForf} ${y}`,eur):''}${bar(p.km,V.kmMax,`${T.vKmL} ${y}`,x=>n1(x)+' km')}</div>`}).join('')||`<p class="note">${T.vNoLogs}</p>`}
+    <div class="row" style="margin:6px 0 14px"><button class="btn" id="vCsv" ${all.length?'':'disabled'}>${T.vCsv}</button><button class="btn ghost" id="lNew">${T.vAdd}</button></div>
+    <div class="card"><button class="btn ghost" id="vRulesB" aria-expanded="${!!S.vOpen}">⚙️ ${T.vRules}</button>${S.vOpen?`<p class="note">${T.vRulesNote}</p><label class="f">${T.vMode}</label><div class="pick"><button data-vmode="forfait" ${pressed(V.mode!=='real')}><span>${T.vForfM}</span></button><button data-vmode="real" ${pressed(V.mode==='real')}><span>${T.vRealM}</span></button></div>
+      ${V.mode!=='real'?inp('day',T.vDay)+inp('dayMax',T.vDayMax)+inp('yearMax',T.vYearMax):''}${inp('kmRate',T.vKmRate)}${inp('kmMax',T.vKmMax)}<p class="note" id="fMsg"></p>`:''}</div>`}
 function renderEd(){const T=t(),F=S.form,d=parse(S.sel),its=itemsAll(d);
   const unread=chatUnread();
   const byName=o=>Object.values(o).sort((a,b)=>String(a.name).localeCompare(b.name));
   let h='';
-  if(!S.isAdmin&&['settings','family','people','places','plan'].includes(S.tab)&&!(S.tab==='plan'&&S.canWrite))S.tab='home';
+  if(!S.isAdmin&&['settings','family','people','places','plan','vol'].includes(S.tab)&&!(S.tab==='plan'&&S.canWrite))S.tab='home';
   if(S.tab==='home'){const td=today(),wk=[];for(let k=0;wk.length<2&&k<14;k++){const d=addD(td,k);if(d.getDay()===6||d.getDay()===0)wk.push(d)}
     const big=(tab,ic,a,b2,n)=>`<button class="bigb" data-tab="${tab}"><span class="ic">${ic}</span><span class="grow"><b>${a}</b><small>${b2}</small></span>${n?`<span class="pill">${n}</span>`:''}</button>`;
     const sm=(tab,ic,a)=>`<button class="smb" data-tab="${tab}"><span>${ic}</span>${a}</button>`;
-    h=`<h2 class="hello">${T.homeHi(esc(S.member?.name||''))} 👋</h2>
+    h=`<h2 class="hello">${T.homeHi(esc(S.member?.name||''))} 👋</h2>${S.canWrite?logNudge():''}
       <div class="card wkc"><b>${T.wkTitle}</b>${wk.map(d=>{const k=key(d),cs=claimsOn(k);return `<div class="wkl" style="${cv(d)}"><span class="dot"></span><span class="grow"><b>${cap(T.days[d.getDay()])} ${d.getDate()} ${T.mon[d.getMonth()]}</b><br>${cs.length?cs.map(c=>`${esc(c.name||T.someone)} ${esc(c.from)}–${esc(c.to)}`).join(' · '):`<span class="nob">${T.wkNobody}</span>`}</span>${S.canWrite?`<button class="btn${cs.length?' ghost':''}" data-wkdo="${k}">${T.wkDo}</button>`:''}</div>`}).join('')}</div>
       <div class="bigs">${big('care','🙋',T.hCare,T.hCareS)}${big('overview','📅',T.hWeek,T.hWeekS)}${S.canWrite?big('chat','💬',T.hChat,T.hChatS,unread)+big('docs','📄',T.hDocs,T.hDocsS):''}</div>
-      <h3 class="sec">${T.hMore}</h3><div class="sms">${sm('dates','🎂',T.dates)}${sm('notes','📝',T.notes)}${sm('account','🔑',T.account)}</div>
-      ${S.isAdmin?`<h3 class="sec">${T.hAdmin}</h3><div class="sms">${sm('family','👪',T.family)}${sm('plan','✏️',T.plan)}${sm('people','🙂',T.people)}${sm('places','🏠',T.places)}${sm('settings','⚙️',T.settings)}</div>`:''}
+      <h3 class="sec">${T.hMore}</h3><div class="sms">${sm('dates','🎂',T.dates)}${sm('notes','📝',T.notes)}${S.canWrite?sm('log','🧾',T.log):''}${sm('account','🔑',T.account)}</div>
+      ${S.isAdmin?`<h3 class="sec">${T.hAdmin}</h3><div class="sms">${sm('vol','💶',T.vol)}${sm('family','👪',T.family)}${sm('plan','✏️',T.plan)}${sm('people','🙂',T.people)}${sm('places','🏠',T.places)}${sm('settings','⚙️',T.settings)}</div>`:''}
       <button class="btn ghost viewb" data-x="ed">👁️ ${T.hView}</button>`}
   if(S.tab==='plan'){
     h=`<label class="f" for="fDate">${T.date}</label><div class="navrow"><button class="btn ghost" data-dstep="-1" aria-label="${T.prev}">◀</button><input type="date" id="fDate" value="${S.sel}" style="max-width:220px"><button class="btn ghost" data-dstep="1" aria-label="${T.next}">▶</button></div>
@@ -698,7 +773,9 @@ function renderEd(){const T=t(),F=S.form,d=parse(S.sel),its=itemsAll(d);
       <div class="row" style="margin-top:8px"><label>${T.sign}<br><input type="text" id="nSign" maxlength="40" value="${esc(sign)}" style="max-width:220px"></label><label>${T.forDay}<br><input type="date" id="nDay" value="${S.noteDay||''}" style="max-width:200px"></label></div>
       <div class="row" style="margin-top:10px"><button class="btn" id="nPost">${T.post}</button><span class="note" id="fMsg"></span></div></div>`:''}
       ${S.notes.length?S.notes.map(msgHTML).join(''):`<p class="note">${T.noNotes}</p>`}`}
-  const title={care:T.hCare,overview:T.hWeek,chat:T.hChat,docs:T.hDocs}[S.tab]||T[S.tab]||'';
+  if(S.tab==='log'&&S.canWrite)h=logHTML();
+  if(S.tab==='vol'&&S.isAdmin)h=volHTML();
+  const title={care:T.hCare,overview:T.hWeek,chat:T.hChat,docs:T.hDocs,log:S.lform?T.hLog:T.log}[S.tab]||T[S.tab]||'';
   $('#edSheet').innerHTML=`<div class="sheet-h">${S.tab==='home'?`<h2 class="brand"><img src="icon-192.png" alt="" width="44" height="44">Bijtje</h2>`:`<button class="btn ghost backb" data-tab="home">‹ ${T.back}</button><h2 class="scr">${title}</h2>`}${S.tab==='home'?'':'<span class="hsp"></span>'}</div>${S.canWrite===false&&S.tab!=='home'?`<p class="note">${T.readonly}</p>`:''}${h}`;
   if(S.lastTab!==S.tab){S.lastTab=S.tab;$('#edSheet').scrollTop=0;$('#edOv').scrollTop=0}
   const cb=$('#chatBox');if(cb)cb.scrollTop=cb.scrollHeight;
@@ -734,7 +811,7 @@ const col=c=>S.db.collection(c);
 const cfgSet=patch=>w(()=>S.db.doc('config/main').set({...S.cfg,...patch}));
 const ed=$('#edSheet');
 ed.addEventListener('focusout',()=>setTimeout(()=>{if(S.edDirty&&!typing()&&$('#edOv').classList.contains('on')){S.edDirty=false;renderEd()}},150));
-const RISKY=['delchat','mrole','dcdel','delitem','delp','dell','deldate','delnote','delinv','unclaim'];
+const RISKY=['delchat','mrole','dcdel','delitem','delp','dell','deldate','delnote','delinv','unclaim','dellog'];
 ed.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const D=b.dataset,F=S.form;
   {const rk=RISKY.find(k=>k in D);if(rk&&!(rk==='mrole'&&b.getAttribute('aria-pressed')==='true')){const id=rk+':'+D[rk]+':'+(D.mid||'');
     if(S.ask!==id){S.ask=id;b.dataset.txt=b.innerHTML;b.innerHTML=t().sure;b.classList.add('asking');clearTimeout(S.askT);S.askT=setTimeout(()=>{S.ask=null;if(b.isConnected){b.innerHTML=b.dataset.txt;b.classList.remove('asking')}},4000);return}
@@ -783,6 +860,21 @@ ed.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
   if('cdrop' in D){S.cform.drop=D.cdrop;renderEd();return}
   if(D.calmore){S.calOpen=S.calOpen===D.calmore?null:D.calmore;renderEd();return}
   if(D.calg&&claimBy(D.calg)){window.open(claimInfo(D.calg).g,'_blank','noopener');return}
+  if(D.logfor){logStart(D.logfor);renderEd();return}
+  if(D.logedit){logStart('',D.logedit);renderEd();return}
+  if(b.id==='lNew'){logStart('');renderEd();return}
+  if(b.id==='lCancel'){S.lform=null;S.tab=S.lback||'log';S.lback=null;renderEd();return}
+  if('lwants' in D&&S.lform){S.lform.wants=D.lwants==='1';renderEd();return}
+  if(D.vstep){const d=parse((S.vMonth||key(today()).slice(0,7))+'-01');d.setMonth(d.getMonth()+ +D.vstep);S.vMonth=key(d).slice(0,7);renderEd();return}
+  if(b.id==='vRulesB'){S.vOpen=!S.vOpen;renderEd();return}
+  if(b.id==='vCsv'){volCsv();return}
+  if(D.vmode&&S.isAdmin)return cfgSet({vol:{...vcfg(),mode:D.vmode}});
+  if(b.id==='lSave'){const LF=S.lform,T=t();if(!LF.date||!LF.from||!LF.to||mins(LF.to)<=mins(LF.from)){flash(T.needT);return}if(LF.wants==null){flash(T.lNeedW);return}
+    const id=LF.id||col('logs').doc().id,doc={claim:LF.cid||'',uid:LF.uid,name:S.members[LF.uid]?.name||LF.name||'',date:LF.date,from:LF.from,to:LF.to,did:LF.did.trim(),km:num(LF.km),cost:num(LF.cost),costNote:LF.costNote.trim(),wants:LF.wants,status:LF.status==='ok'&&S.isAdmin?'ok':'new',at:LF.at||new Date().toISOString(),by:S.me};
+    col('logs').doc(id).set(doc).then(()=>{S.lform=null;S.tab=S.lback||'log';S.lback=null;renderEd();toast(T.lThanks)}).catch(()=>{flash(T.err);toast(T.failed)});return}
+  if(D.logok&&S.isAdmin){const l=(S.logs||[]).find(x=>x.id===D.logok);if(l)w(()=>col('logs').doc(l.id).update({status:l.status==='ok'?'new':'ok',okAt:new Date().toISOString()}),false);return}
+  if(D.dellog&&S.isAdmin){const l=(S.logs||[]).find(x=>x.id===D.dellog);if(!l)return;const keep={...l};delete keep.id;w(()=>col('logs').doc(l.id).delete().then(()=>toast(t().done,t().undo,()=>col('logs').doc(l.id).set(keep).then(()=>toast(t().undone)))),false);return}
+  if(D.logmail){const c=claimBy(D.logmail),m=c&&S.members[c.uid];if(!m?.email){toast(t().calNoMail);return}mailOpen(m.email,t().vMailSubj,t().vMailBody(m.name||c.name||'',dayL(c.date).toLowerCase(),location.origin+location.pathname+'#log='+c.id));return}
   if(D.calics&&claimBy(D.calics)){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([claimIcs(D.calics)],{type:'text/calendar'}));a.download='bijtje-'+claimBy(D.calics).date+'.ics';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000);return}
   if(D.calmail&&claimBy(D.calmail)){const I=claimInfo(D.calmail),T=t(),to=[...new Set(Object.values(S.members).map(m=>m.email).filter(Boolean))];
     if(!to.length){S.calMsg=D.calmail;renderEd();return}
@@ -844,8 +936,11 @@ ed.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
 });
 ed.addEventListener('input',e=>{const el=e.target,F=S.form;if(el.id==='nText')S.nDraft=el.value;if(el.id==='chText')S.chDraft=el.value;if(el.id==='iName'&&S.iform)S.iform.name=el.value;if(el.id==='iEmail'&&S.iform)S.iform.email=el.value;if(el.id==='cFrom'&&S.cform)S.cform.from=el.value;if(el.id==='cTo'&&S.cform)S.cform.to=el.value;if(el.id==='dName'&&S.dform)S.dform.name=el.value;if(el.id==='dDate'&&S.dform)S.dform.date=el.value;
   if(el.id==='fNote')F.note=el.value;if(el.id==='fStar')F.star=el.checked;if(el.id==='fRep')F.repeat=el.checked;
-  if(el.id==='fStart')F.start=el.value;if(el.id==='fEnd')F.end=el.value});
+  if(el.id==='fStart')F.start=el.value;if(el.id==='fEnd')F.end=el.value;
+  if(S.lform){const m={lFrom:'from',lTo:'to',lDid:'did',lKm:'km',lCost:'cost',lCostNote:'costNote',lDate:'date',lWho:'uid'}[el.id];if(m)S.lform[m]=el.value}});
 ed.addEventListener('change',async e=>{const el=e.target,D=el.dataset;
+  if(D.vset&&S.isAdmin)return cfgSet({vol:{...vcfg(),[D.vset]:num(el.value)}});
+  if(el.id==='lWho'&&S.lform){S.lform.uid=el.value;S.lform.name=S.members[el.value]?.name||'';return}
   if((el.id==='cFrom'||el.id==='cTo')&&S.cform){renderEd();return}
   if(['dName','dDate','iName','iEmail','acE','acP','cOther','chText'].includes(el.id))return;
   if(el.id==='dcFile'&&el.files[0]&&S.db){docUpload(el.files[0]).catch(()=>flash(t().err));return}
@@ -884,6 +979,7 @@ const FB={apiKey:"AIzaSyDnz1i5xpoNL34Bzqy0TeHBYy8-7FPaez4",authDomain:"agenda-de
   const now=()=>new Date().toISOString();
   let tok=(location.hash.match(/join=([\w-]+)/)||[])[1];const hashTok=tok||'';
   try{if(tok)localStorage.setItem('agenda-join',tok);else tok=localStorage.getItem('agenda-join')||''}catch(e){}
+  {const lm=location.hash.match(/log=([\w-]+)/);if(lm){try{sessionStorage.setItem('bijtje-log',lm[1])}catch(e){}history.replaceState(null,'',location.pathname)}}
   if(location.hash.includes('join='))history.replaceState(null,'',location.pathname);
   const getM=async u=>{try{const g=await db.doc('members/'+u.uid).get();return g.exists?g.data():null}catch(e){return null}};
   let m=user?await getM(user):null;
@@ -944,7 +1040,8 @@ const FB={apiKey:"AIzaSyDnz1i5xpoNL34Bzqy0TeHBYy8-7FPaez4",authDomain:"agenda-de
   db.collection('days').onSnapshot(s=>{S.days=Object.fromEntries(s.docs.map(d=>[d.id,d.data()]));render();done(s)},fail);
   db.collection('notes').orderBy('at','desc').limit(200).onSnapshot(s=>{S.notes=s.docs.map(d=>({id:d.id,...d.data()}));render();done(s)},fail);
   db.doc('config/main').onSnapshot(s=>{S.cfg=s.exists?{...s.data()}:{};render();done(s)},fail);
-  db.collection('claims').onSnapshot(s=>{S.claimList=s.docs.map(d=>({id:d.id,...d.data(),date:d.data().date||d.id}));render()},()=>{});
+  db.collection('claims').onSnapshot(s=>{S.claimList=s.docs.map(d=>({id:d.id,...d.data(),date:d.data().date||d.id}));render();logLink()},()=>{});
+  if(S.canWrite)(S.isAdmin?db.collection('logs'):db.collection('logs').where('uid','==',uid)).onSnapshot(s=>{S.logs=s.docs.map(d=>({id:d.id,...d.data()}));render();logLink()},()=>{});
   db.collection('members').onSnapshot(s=>{S.members=Object.fromEntries(s.docs.map(d=>[d.id,d.data()]));for(const [id,x] of Object.entries(S.members))S.names[id]=x.name||'';
     if(!S.members[uid]||S.members[uid].role!==m.role){location.reload();return}render()},()=>{});
   if(S.canWrite){db.collection('chat').orderBy('at','desc').limit(300).onSnapshot(s=>{S.chat=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.at||'')<(b.at||'')?-1:1);render();const cb=$('#chatBox');if(cb&&$('#edOv').classList.contains('on')&&S.tab==='chat'){cb.innerHTML=chatHTML();cb.scrollTop=cb.scrollHeight;chatMark()}},()=>{});

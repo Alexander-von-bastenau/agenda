@@ -35,6 +35,12 @@ service cloud.firestore {
       allow create: if canEdit() && request.resource.data.by == request.auth.uid;
       allow delete: if isAdmin() || (canEdit() && resource.data.by == request.auth.uid);
     }
+    match /logs/{id} {
+      allow read: if isAdmin() || (canEdit() && resource.data.uid == request.auth.uid);
+      allow create: if isAdmin() || (canEdit() && request.resource.data.uid == request.auth.uid && request.resource.data.status == 'new');
+      allow update: if isAdmin() || (canEdit() && resource.data.uid == request.auth.uid && resource.data.status == 'new' && request.resource.data.uid == request.auth.uid && request.resource.data.status == 'new');
+      allow delete: if isAdmin();
+    }
     match /docs/{id} {
       function sees(d) { return isAdmin() || d.by == request.auth.uid || 'all' in d.to || request.auth.uid in d.to; }
       allow read: if canEdit() && sees(resource.data);
