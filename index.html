@@ -111,10 +111,14 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 .blk .tile,.blk .ava{width:72px;height:72px;font-size:44px}
 .blk.short .tile,.blk.short .ava{width:46px;height:46px;font-size:28px;border-width:3px}
 .blk.done{opacity:.4;filter:saturate(.4)}
-.blk .in{position:sticky;top:104px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.blk.done .in::after{content:"✓";margin-inline-start:auto;font:800 40px 'Baloo 2'}
+.blk .in{position:sticky;top:104px;display:flex;align-items:center;gap:12px;flex-wrap:nowrap}
+.blk.done .in::after{content:"✓";margin-inline-start:6px;font:800 40px 'Baloo 2'}
 .blk.cur{outline:6px solid var(--ink);z-index:2}
-.blk small{font-size:15px;opacity:.75}
+.blk .syms{display:flex;align-items:center;gap:10px;flex:none}
+.blk .meta{margin-inline-start:auto;min-width:0;display:flex;flex-direction:column;align-items:flex-end;text-align:end;gap:2px}
+.blk .meta b{font:700 16px Andika,sans-serif;background:rgba(255,255,255,.55);border-radius:999px;padding:3px 10px;white-space:nowrap}
+.blk .meta small{font-size:13px;opacity:.8;line-height:1.25;max-width:22ch;flex-basis:auto;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.blk{display:flex;flex-direction:column;justify-content:flex-start}.blk.short{justify-content:center}.blk.short .in{position:static}
 .endcap{position:absolute;inset-inline:0;display:flex;align-items:center;gap:12px;font-size:48px}
 .endcap small{font:700 17px Andika;order:2;opacity:.7}
 .endcap::after{content:"";flex:1;height:8px;border-radius:4px;background:var(--line)}
@@ -165,7 +169,7 @@ body.night .board,body.night .wk-h .arrow,body.night .dots{opacity:.4}
 .day .stack .off::after,.blk.off .in::after{content:"✕";color:#e53935;font:800 1.2em/1 'Baloo 2',sans-serif}
 .day .stack .off::after{position:absolute;inset:0;display:grid;place-items:center;font-size:1.6em;filter:none}
 .blk.off{filter:grayscale(.9);opacity:.6;background-image:repeating-linear-gradient(135deg,transparent 0 14px,rgba(0,0,0,.08) 14px 28px)}
-.blk.off .in::after{margin-inline-start:auto;font-size:44px}
+.blk.off .in::after{margin-inline-start:6px;font-size:44px}
 .blk.say{outline:7px solid #ffcc00;z-index:3}
 .special{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:#fff3c4;color:#2b2118;border-radius:22px;padding:10px 16px;margin:6px 0 14px;font-size:20px}
 .special .big{font-size:52px;line-height:1}
@@ -395,40 +399,74 @@ function symsOf(i){const pl=S.places[i.place],p=S.people[i.person];
 // ---------- speech text: short, warm, no repetition ----------
 const SP={
 nl:{hi:n=>n<720?'Goeiemorgen':n<1080?'Dag':'Goeieavond',day:d=>`Het is ${d}.`,whole:(h,p)=>`${h} ben je de hele dag ${p}.`,nowAt:p=>`Nu ben je ${p}.`,nowDo:a=>`Je gaat nu ${a}.`,nextDo:a=>`Straks ga je ${a}.`,nextAt:(p,ag)=>`Straks ben je ${ag?'weer ':''}${p}.`,pick:(n,tm)=>tm?`Om ${tm} komt ${n} je halen.`:`${n} komt je halen.`,special:(n,now)=>now?`Vandaag is het ${n}!`:`Dan is het ${n}.`,untilS:(k,n)=>k==1?`Morgen is het ${n}.`:`Nog ${k} keer slapen, en dan is het ${n}.`,cancel:w=>`Let op: ${w} gaat niet door.`,timeNow:tm=>`Het is nu ${tm}.`,wakeAt:tm=>`Je staat op om ${tm}.`,sleepAtT:tm=>`Om ${tm} ga je lekker slapen.`,atT:(tm,p,ag)=>`Om ${tm} ben je ${ag?'weer ':''}${p}.`,doT:(tm,a)=>`Om ${tm} ga je ${a}.`,before:p=>`Daarnet was je ${p}.`,
- sleepNow:'Het is slaaptijd. Slaap lekker.',sleepAt:p=>`Vannacht slaap je ${p}.`,count:(n,p)=>n==1?`Morgen ben je ${p}.`:`Nog ${n} keer slapen, en dan ben je ${p}.`,with:p=>`, samen met ${p}`,thenDay:'Dan',conn:['Eerst','Daarna','Dan','En daarna'],at:(c,p,ag)=>`${c} ben je ${ag?'weer ':''}${p}.`,atPast:(c,p)=>`${c} was je ${p}.`,doing:l=>`Je gaat ${l}.`,and:'en',end:"En 's avonds ga je lekker slapen.",
+ sleepNow:'Het is slaaptijd. Slaap lekker.',sleepAt:p=>`Vannacht slaap je ${p}.`,count:(n,p)=>n==1?`Morgen ben je ${p}.`:`Nog ${n} keer slapen, en dan ben je ${p}.`,with:p=>`, samen met ${p}`,thenDay:'Dan',conn:['Eerst','Daarna','Dan','En daarna'],at:(c,p,ag)=>`${c} ben je ${ag?'weer ':''}${p}.`,atPast:(c,p)=>`${c} was je ${p}.`,doing:l=>`Je gaat ${l}.`,and:'en',ride:(tm,n)=>`Om ${tm} komt ${n} je halen.`,rideSame:(tm,n)=>`Om ${tm} vertrek je samen met ${n}.`,rideP:n=>`Daarna kwam ${n} je halen.`,thenAt:(p,u)=>`Dan ben je ${p}${u?`, tot ${u}`:''}.`,thenAtP:p=>`Dan was je ${p}.`,after:(p,ag)=>`Daarna ben je ${ag?'weer ':''}${p}.`,end:"En 's avonds ga je lekker slapen.",
  rel:(n,dn)=>n===0?'Vandaag':n===1?'Morgen':n===-1?'Gisteren':n>1?`Op ${dn}`:`Op ${dn}`,head:(n,dn)=>n===0?`Vandaag is het ${dn}.`:n===1?`Morgen is het ${dn}.`:n===-1?`Gisteren was het ${dn}.`:n>1?`Nog ${n} keer slapen, dan is het ${dn}.`:`Dat was ${dn}.`,nothing:'Er staat nog niets in je agenda.',hereAt:p=>`Hier ben je ${p}.`,test:'Dag! Vandaag ben je de hele dag in het instituut. Nog drie keer slapen, en dan ben je bij Jeffrey thuis.'},
 es:{sleepAt:p=>`Esta noche duermes ${p}.`,hi:n=>n<720?'Buenos días':n<1200?'Hola':'Buenas noches',day:d=>`Hoy es ${d}.`,whole:(h,p)=>`${h} estás todo el día ${p}.`,nowAt:p=>`Ahora estás ${p}.`,nowDo:a=>`Ahora vas a ${a}.`,nextDo:a=>`Luego vas a ${a}.`,nextAt:(p,ag)=>`Luego estarás ${ag?'otra vez ':''}${p}.`,pick:(n,tm)=>tm?`A las ${tm} ${n} viene a buscarte.`:`${n} viene a buscarte.`,special:(n,now)=>now?`¡Hoy es ${n}!`:`Ese día es ${n}.`,untilS:(k,n)=>k==1?`Mañana es ${n}.`:`Faltan ${k} noches para ${n}.`,cancel:w=>`Atención: ${w} no se hace.`,timeNow:tm=>`Ahora son las ${tm}.`,wakeAt:tm=>`Te levantas a las ${tm}.`,sleepAtT:tm=>`A las ${tm} te vas a dormir.`,atT:(tm,p,ag)=>`A las ${tm} estás ${ag?'otra vez ':''}${p}.`,doT:(tm,a)=>`A las ${tm} vas a ${a}.`,before:p=>`Antes estabas ${p}.`,
- sleepNow:'Ahora es hora de dormir. Dulces sueños.',count:(n,p)=>n==1?`Mañana estarás ${p}.`:`Faltan ${n} noches, y luego estarás ${p}.`,with:p=>`, con ${p}`,thenDay:'Ese día',conn:['Primero','Después','Luego','Y más tarde'],at:(c,p,ag)=>`${c} estás ${ag?'otra vez ':''}${p}.`,atPast:(c,p)=>`${c} estabas ${p}.`,doing:l=>`Vas a ${l}.`,and:'y',end:'Y por la noche, a dormir.',
+ sleepNow:'Ahora es hora de dormir. Dulces sueños.',count:(n,p)=>n==1?`Mañana estarás ${p}.`:`Faltan ${n} noches, y luego estarás ${p}.`,with:p=>`, con ${p}`,thenDay:'Ese día',conn:['Primero','Después','Luego','Y más tarde'],at:(c,p,ag)=>`${c} estás ${ag?'otra vez ':''}${p}.`,atPast:(c,p)=>`${c} estabas ${p}.`,doing:l=>`Vas a ${l}.`,and:'y',ride:(tm,n)=>`A las ${tm} ${n} viene a buscarte.`,rideSame:(tm,n)=>`A las ${tm} sales con ${n}.`,rideP:n=>`Después ${n} vino a buscarte.`,thenAt:(p,u)=>`Luego estás ${p}${u?`, hasta las ${u}`:''}.`,thenAtP:p=>`Luego estabas ${p}.`,after:(p,ag)=>`Después estás ${ag?'otra vez ':''}${p}.`,end:'Y por la noche, a dormir.',
  rel:(n,dn)=>n===0?'Hoy':n===1?'Mañana':n===-1?'Ayer':`El ${dn}`,head:(n,dn)=>n===0?`Hoy es ${dn}.`:n===1?`Mañana es ${dn}.`:n===-1?`Ayer fue ${dn}.`:n>1?`Faltan ${n} noches para el ${dn}.`:`Eso fue el ${dn}.`,nothing:'Todavía no hay nada en tu agenda.',hereAt:p=>`Aquí estás ${p}.`,test:'¡Hola! Hoy estás todo el día en el instituto. Faltan tres noches, y luego estarás en casa de Jeffrey.'},
 en:{hi:n=>n<720?'Good morning':n<1080?'Hello':'Good evening',day:d=>`It is ${d}.`,whole:(h,p)=>`${h} you are ${p} all day.`,nowAt:p=>`Now you are ${p}.`,nowDo:a=>`Now you will ${a}.`,nextDo:a=>`Soon you will ${a}.`,nextAt:(p,ag)=>`Soon you will be ${ag?'back ':''}${p}.`,pick:(n,tm)=>tm?`At ${tm} ${n} is coming to pick you up.`:`${n} is coming to pick you up.`,special:(n,now)=>now?`Today is ${n}!`:`That day is ${n}.`,untilS:(k,n)=>k==1?`Tomorrow is ${n}.`:`${k} more sleeps until ${n}.`,cancel:w=>`Note: ${w} is cancelled.`,timeNow:tm=>`It is ${tm} now.`,wakeAt:tm=>`You get up at ${tm}.`,sleepAtT:tm=>`At ${tm} you go to sleep.`,atT:(tm,p,ag)=>`At ${tm} you are ${ag?'back ':''}${p}.`,doT:(tm,a)=>`At ${tm} you will ${a}.`,before:p=>`Before, you were ${p}.`,
- sleepNow:'It is time to sleep now. Sleep well.',sleepAt:p=>`Tonight you sleep ${p}.`,count:(n,p)=>n==1?`Tomorrow you will be ${p}.`:`${n} more sleeps, and then you will be ${p}.`,with:p=>`, with ${p}`,thenDay:'That day',conn:['First','Then','After that','And later'],at:(c,p,ag)=>`${c} you are ${ag?'back ':''}${p}.`,atPast:(c,p)=>`${c} you were ${p}.`,doing:l=>`You will ${l}.`,and:'and',end:'And in the evening you go to sleep.',
+ sleepNow:'It is time to sleep now. Sleep well.',sleepAt:p=>`Tonight you sleep ${p}.`,count:(n,p)=>n==1?`Tomorrow you will be ${p}.`:`${n} more sleeps, and then you will be ${p}.`,with:p=>`, with ${p}`,thenDay:'That day',conn:['First','Then','After that','And later'],at:(c,p,ag)=>`${c} you are ${ag?'back ':''}${p}.`,atPast:(c,p)=>`${c} you were ${p}.`,doing:l=>`You will ${l}.`,and:'and',ride:(tm,n)=>`At ${tm} ${n} comes to pick you up.`,rideSame:(tm,n)=>`At ${tm} you leave with ${n}.`,rideP:n=>`Then ${n} came to pick you up.`,thenAt:(p,u)=>`Then you are ${p}${u?`, until ${u}`:''}.`,thenAtP:p=>`Then you were ${p}.`,after:(p,ag)=>`After that you are ${ag?'back ':''}${p}.`,end:'And in the evening you go to sleep.',
  rel:(n,dn)=>n===0?'Today':n===1?'Tomorrow':n===-1?'Yesterday':`On ${dn}`,head:(n,dn)=>n===0?`Today is ${dn}.`:n===1?`Tomorrow is ${dn}.`:n===-1?`Yesterday was ${dn}.`:n>1?`${n} more sleeps until ${dn}.`:`That was ${dn}.`,nothing:'There is nothing in your agenda yet.',hereAt:p=>`Here you are ${p}.`,test:'Hello! Today you are at the institute all day. Three more sleeps, and then you will be at Jeffrey\'s house.'}};
 const sp=()=>SP[S.cfg.lang]||SP.nl;
 const actSay=a=>ACT[a]?.[t().ai]||'';
 const plSay=id=>{const p=S.places[id];const o=ownerOf(p);if(p&&!p.say&&o)return S.cfg.lang==='en'?`at ${o.name}'s house`:S.cfg.lang==='es'?`en casa de ${o.name}`:`bij ${o.name} thuis`;return p?(p.say||(S.cfg.lang==='en'?`at ${p.name}`:S.cfg.lang==='es'?`en ${p.name}`:`bij ${p.name}`)):''};
 const listJoin=a=>a.length<2?a.join(''):a.slice(0,-1).join(', ')+` ${sp().and} `+a[a.length-1];
 function withP(ids,placeSaid){const names=[...new Set(ids)].map(id=>S.people[id]?.name).filter(n=>n&&!placeSaid.toLowerCase().includes(n.toLowerCase()));return names.length?sp().with(listJoin(names)):''}
-// merge neighbouring items at the same place into one segment
+// rides (car or bus with no place) stand on their own; everything else at the same place merges into one stay
+const RIDE=['🚗','🚌'];
+const isRide=i=>!i.place&&RIDE.includes(i.act);
 function segs(its){const out=[];for(const i of its){const l=out[out.length-1];
-  if(l&&(i.place===l.place||!i.place)){l.items.push(i);l.end=i.end}else out.push({place:i.place,items:[i],start:i.start,end:i.end})}
-  for(const g of out){g.acts=[...new Set(g.items.map(i=>actSay(i.act)).filter(Boolean))];g.people=g.items.map(i=>i.person).filter(Boolean)}return out}
+  if(isRide(i)){out.push({ride:true,place:'',items:[i],start:i.start,end:i.end});continue}
+  if(l&&!l.ride&&(i.place===l.place||!i.place)){l.items.push(i);l.end=i.end}else out.push({place:i.place,items:[i],start:i.start,end:i.end})}
+  for(const g of out){g.acts=g.ride?[]:[...new Set(g.items.map(i=>actSay(i.act)).filter(Boolean))];g.people=g.items.map(i=>i.person).filter(Boolean)}return out}
 function mainPlace(d){const m={};for(const i of itemsFor(d))if(i.place)m[i.place]=(m[i.place]||0)+mins(i.end)-mins(i.start);return Object.keys(m).sort((a,b)=>m[b]-m[a])[0]||''}
 function nextChange(from){const P=mainPlace(from);for(let n=1;n<=14;n++){const m=mainPlace(addD(from,n));if(m&&m!==P)return {n:n+Math.round((from-today())/864e5),place:m}}return null}
 function countLine(from){const c=nextChange(from);return c?sp().count(c.n,plSay(c.place)):''}
 const cancels=d=>itemsAll(d).filter(i=>i._off).map(i=>tag(sp().cancel(cap(what(i))),[i.id]));
-function sayItem(i){const T=sp(),p=plSay(i.place);return [p?T.hereAt(p).replace(/\.$/,withP([i.person],p)+'.'):'',i.act?T.doing(actSay(i.act)):''].filter(Boolean).join(' ')}
+const fullDay=(g,d)=>g.length===1&&g[0].place&&mins(g[0].start)<=wakeM(d)+60&&mins(g[0].end)>=sleepM(d)-60;
+const isHost=(stay,pid)=>!!stay&&!!pid&&(stay.people.includes(pid)||S.places[stay.place]?.owner===pid);
+// one ride, told from where she is: someone new comes to fetch her, or she leaves with her host
+function sayRide(x,stay,past){const T=sp(),pid=x.people[0],who=pid&&S.people[pid]?cap(S.people[pid].name):'',tm=clockSay(mins(x.start)),a=actSay(x.items[0].act);
+  if(past)return who?T.rideP(who):'';
+  if(!who)return T.doT(tm,a);
+  return isHost(stay,pid)?T.rideSame(tm,who):T.ride(tm,who)}
+// the day as one story: where she is, who fetches her, where she goes next
+function story(g,past,d){const T=sp(),out=[],ids=x=>x.items.map(i=>i.id);let stay=null,saidEnd='';
+  g.forEach((x,k)=>{const prev=g[k-1];
+    if(x.ride){const r=sayRide(x,stay,past);if(r)out.push(tag(r,ids(x)));saidEnd='';return}
+    const ps=plSay(x.place);
+    if(!ps){if(!past&&x.acts.length)out.push(tag(`${T.conn[Math.min(k,T.conn.length-1)]} ${T.doing(listJoin(x.acts)).replace(/^\S+/,m=>m.toLowerCase())}`,ids(x)));return}
+    const w=ps+withP(x.people,ps),again=g.slice(0,k).some(y=>!y.ride&&y.place===x.place),more=g.slice(k+1).some(y=>y.place),until=more?clockSay(mins(x.end)):'';
+    let line;
+    if(past)line=!stay&&!prev?T.atPast(T.conn[0],w):prev?.ride?T.thenAtP(w):T.atPast(T.conn[1],w);
+    else if(!stay&&!prev)line=T.at(T.conn[0],w);
+    else if(prev?.ride){line=T.thenAt(w,until);saidEnd=until?x.end:''}
+    else if(saidEnd&&saidEnd===x.start)line=T.after(w,again);
+    else line=T.atT(clockSay(mins(x.start)),w,again);
+    if(!prev?.ride)saidEnd='';
+    out.push(tag(line,ids(x)));
+    if(!past&&x.acts.length)out.push(T.doing(listJoin(x.acts)));
+    stay=x});
+  return out}
+function sayItem(i){const T=sp(),p=plSay(i.place);
+  if(!p&&i.act)return T.doing(actSay(i.act)).replace(/\.$/,withP([i.person],'')+'.');
+  return [p?T.hereAt(p).replace(/\.$/,withP([i.person],p)+'.'):'',i.act?T.doing(actSay(i.act)):''].filter(Boolean).join(' ')}
 function sayNow(){const T=sp(),td=today(),n=nowMin(),its=itemsFor(td),g=segs(its);
   const out=[`${T.hi(n)}${S.cfg.name?' '+S.cfg.name:''}!`,T.day(t().days[td.getDay()]),T.timeNow(clockSay(n)),...datesFor(td).map(x=>T.special(x.name,true))];
   if(n<sleepM())out.push(...itemsAll(td).filter(i=>i._off&&mins(i.end)>n).map(i=>tag(sp().cancel(cap(what(i))),[i.id])));
-  if(n>=sleepM()||n<wakeM()){const sg=n>=sleepM()?g[g.length-1]:g[0];if(sg?.place)out.push(T.sleepAt(plSay(sg.place)));out.push(T.sleepNow);const c=countLine(td);if(c)out.push(c);return out}
-  if(g.length===1&&g[0].place){out.push(T.whole(T.rel(0),plSay(g[0].place)+withP(g[0].people,plSay(g[0].place))))
+  if(n>=sleepM()||n<wakeM()){const st=g.filter(x=>x.place),sg=n>=sleepM()?st[st.length-1]:st[0];if(sg)out.push(T.sleepAt(plSay(sg.place)));out.push(T.sleepNow);const c=countLine(td);if(c)out.push(c);return out}
+  if(fullDay(g,td)){out.push(T.whole(T.rel(0),plSay(g[0].place)+withP(g[0].people,plSay(g[0].place))));
     const cur=its.find(i=>mins(i.start)<=n&&n<mins(i.end)),nx=its.find(i=>mins(i.start)>n&&i.act&&i.act!==cur?.act);
     if(cur?.act)out.push(T.nowDo(actSay(cur.act)));if(nx)out.push(T.doT(clockSay(mins(nx.start)),actSay(nx.act)));else out.push(T.sleepAtT(clockSay(sleepM())))}
   else if(g.length){const ci=g.findIndex(x=>mins(x.start)<=n&&n<mins(x.end)),ni=g.findIndex(x=>mins(x.start)>n);
-    const lastI=ci>=0?ci-1:(ni>=0?ni-1:g.length-1);
-    if(lastI>=0&&g[lastI].place&&ci<0)out.push(T.before(plSay(g[lastI].place)));
-    if(ci>=0){const c=g[ci],ps=plSay(c.place);if(ps)out.push(T.nowAt(ps+withP(c.people,ps)));const ca=c.items.find(i=>mins(i.start)<=n&&n<mins(i.end));if(ca?.act)out.push(T.nowDo(actSay(ca.act)))}
-    if(ni>=0){const x=g[ni],ps=plSay(x.place),cp=ci>=0?g[ci].people:[],np=(x.people[0]||S.places[x.place]?.owner);const tm=clockSay(mins(x.start));const picked=np&&!cp.includes(np)&&S.people[np];if(picked)out.push(T.pick(cap(S.people[np].name),tm));out.push(ps&&picked?T.at(T.thenDay,ps,g.slice(0,ni).some(y=>y.place===x.place)):ps?T.atT(tm,ps+withP(x.people,ps),g.slice(0,ni).some(y=>y.place===x.place)):T.doT(tm,listJoin(x.acts)))}
+    const before=g.slice(0,ci>=0?ci:ni>=0?ni:g.length).filter(x=>!x.ride&&x.place),stay=ci>=0&&!g[ci].ride?g[ci]:before[before.length-1];
+    if(ci<0&&stay)out.push(T.before(plSay(stay.place)));
+    if(ci>=0){const c=g[ci];
+      if(c.ride){const pid=c.people[0];out.push(T.nowDo(actSay(c.items[0].act)).replace(/\.$/,withP([pid].filter(Boolean),'')+'.'))}
+      else{const ps=plSay(c.place);if(ps)out.push(T.nowAt(ps+withP(c.people,ps)));const ca=c.items.find(i=>mins(i.start)<=n&&n<mins(i.end));if(ca?.act)out.push(T.nowDo(actSay(ca.act)))}}
+    if(ni>=0){const x=g[ni];
+      if(x.ride){out.push(sayRide(x,stay,false));const y=g[ni+1];if(y&&!y.ride&&y.place){const ps=plSay(y.place);out.push(T.thenAt(ps+withP(y.people,ps),''))}}
+      else{const ps=plSay(x.place),again=g.slice(0,ni).some(y=>!y.ride&&y.place===x.place);out.push(ps?T.atT(clockSay(mins(x.start)),ps+withP(x.people,ps),again):T.doT(clockSay(mins(x.start)),listJoin(x.acts)))}}
     else out.push(T.sleepAtT(clockSay(sleepM())))
   }else out.push(T.nothing);
   const c=countLine(td);if(c)out.push(c);
@@ -437,12 +475,9 @@ function sayNow(){const T=sp(),td=today(),n=nowMin(),its=itemsFor(td),g=segs(its
 function sayDay(d){const T=sp(),diff=Math.round((d-today())/864e5),dn=t().days[d.getDay()],its=itemsFor(d),g=segs(its),past=diff<0;
   const out=[T.head(diff,dn),...(diff>=0?datesFor(d).map(x=>T.special(x.name,diff===0)):[])];
   if(!past)out.push(T.wakeAt(clockSay(wakeM(d))),...cancels(d));
-  const ids=x=>x.items.map(i=>i.id);
   if(!its.length){out.push(T.nothing);return out}
-  if(g.length===1&&g[0].place){const ps=plSay(g[0].place);out.push(tag(past?T.atPast(T.rel(diff,dn),ps):T.whole(diff===0?T.rel(0):T.thenDay,ps+withP(g[0].people,ps)),ids(g[0])));if(!past&&g[0].acts.length)out.push(T.doing(listJoin(g[0].acts)))}
-  else g.forEach((x,k)=>{const c=T.conn[Math.min(k,T.conn.length-1)],ps=plSay(x.place);
-    if(ps)out.push(tag(past?T.atPast(c,ps):k?T.atT(clockSay(mins(x.start)),ps+withP(x.people,ps),g.slice(0,k).some(y=>y.place===x.place)):T.at(c,ps+withP(x.people,ps)),ids(x)));
-    if(!past&&x.acts.length)out.push(ps?T.doing(listJoin(x.acts)):`${c} ${T.doing(listJoin(x.acts)).replace(/^\S+/,m=>m.toLowerCase())}`)});
+  if(fullDay(g,d)){const ps=plSay(g[0].place);out.push(tag(past?T.atPast(T.rel(diff,dn),ps):T.whole(diff===0?T.rel(0):T.thenDay,ps+withP(g[0].people,ps)),g[0].items.map(i=>i.id)));if(!past&&g[0].acts.length)out.push(T.doing(listJoin(g[0].acts)))}
+  else out.push(...story(g,past,d));
   if(!past)out.push(T.sleepAtT(clockSay(sleepM(d))));
   return out}
 function curNext(){const its=itemsFor(today()),n=nowMin();
@@ -491,11 +526,14 @@ function render(){const T=t(),td=today();
 // day ribbon
 const PX=1.5;
 function openDay(k,talk=true){S.open=k;const d=parse(k),T=t(),its=itemsAll(d),w=wakeM(d),s=sleepM(d),isT=k===key(today()),n=nowMin();
-  const y=m=>(Math.max(w,Math.min(s,m))-w)*PX+70;
+  // time scale with room for short blocks: a block never gets smaller than MINH, and the hours stretch with it
+  const MINH=72,GAP=8,cl=m=>Math.max(w,Math.min(s,m)),pts=[...new Set([w,s,...its.flatMap(i=>[cl(mins(i.start)),cl(mins(i.end))])])].sort((a,b)=>a-b),pos=[70];
+  for(let k=1;k<pts.length;k++){const a=pts[k-1],b=pts[k],tight=its.some(i=>cl(mins(i.start))===a&&cl(mins(i.end))===b);pos[k]=pos[k-1]+Math.max((b-a)*PX,tight?MINH+GAP:0)}
+  const y=m=>{m=cl(m);let k=pts.findIndex(p=>p>=m);if(k<=0)return pos[0];return pos[k-1]+(pos[k]-pos[k-1])*(m-pts[k-1])/(pts[k]-pts[k-1])};
   let hrs='';for(let h=Math.ceil(w/60);h*60<=s;h++)hrs+=`<div class="hr" style="top:${y(h*60)}px"><b>${pad(h)}:00</b></div>`;
-  const blocks=its.map(i=>{const a=mins(i.start),b=mins(i.end),top=y(a),hgt=Math.max(54,y(b)-top-6);
+  const blocks=its.map(i=>{const a=mins(i.start),b=mins(i.end),top=y(a),hgt=Math.max(MINH,y(b)-top-GAP);
     const cls=i._off?' off'+(hgt<90?' short':''):(isT&&b<=n?' done':'')+(isT&&a<=n&&n<b?' cur':'')+(d<today()?' done':'')+(hgt<90?' short':'');
-    return `<button class="blk${cls}" style="top:${top}px;height:${hgt}px;--pc:${colOf(i)}" data-id="${esc(i.id)}" data-say="${esc(i._off?sp().cancel(cap(what(i))):sayItem(i))}"><span class="in">${symsOf(i)}<small>${esc(i.start)}–${esc(i.end)}${i.star?' ⭐':''}${i.note?' · '+esc(i.note):''}</small></span></button>`}).join('');
+    return `<button class="blk${cls}" style="top:${top}px;height:${hgt}px;--pc:${colOf(i)}" data-id="${esc(i.id)}" data-say="${esc(i._off?sp().cancel(cap(what(i))):sayItem(i))}"><span class="in"><span class="syms">${symsOf(i)}</span><span class="meta"><b>${esc(i.start)} – ${esc(i.end)}${i.star?' ⭐':''}</b>${i.note?`<small>${esc(i.note)}</small>`:''}</span></span></button>`}).join('');
   const H=y(s)+90;
   const line=isT&&n>=w&&n<=s?`<div class="nowline" id="nowline" style="top:${y(n)}px">${ava(meP(),'me')}</div>`:'';
   $('#daySheet').innerHTML=`<div class="sheet-h"><div class="dayhead" style="${cv(d)}"><b>${cap(T.days[d.getDay()])}</b><span>${d.getDate()} ${T.mon[d.getMonth()]}</span></div><button class="spk${speaking?' talk':''}" data-spkday="${k}" aria-label="Voorlezen">🔊</button>${S.canWrite?`<button class="edbtn holdbtn" data-hold="plan:${k}" aria-label="${T.planDay}" title="${T.holdHint}"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30"/></svg>✏️</button>`:''}<button class="close" data-x="day" aria-label="${T.close}">✕</button></div>
