@@ -1105,6 +1105,15 @@ const FB={apiKey:"AIzaSyDnz1i5xpoNL34Bzqy0TeHBYy8-7FPaez4",authDomain:"agenda-de
   setTimeout(touchSeen,3000);setInterval(()=>{if(!document.hidden)touchSeen()},30*60000);
   window.__agenda={db,uid};
 })();
+
+// self-update: every device checks for a newer Bijtje and reloads when nobody is busy
+const BUILD='2026-11-26-1';
+async function checkUpdate(){try{const r=await fetch(location.pathname+'?check='+Date.now(),{cache:'no-store'});if(!r.ok)return;
+  const m=(await r.text()).match(/const BUILD='([^']+)'/);if(!m||m[1]===BUILD)return;
+  if(speaking||$('#edOv')?.classList.contains('on')||typing()){setTimeout(checkUpdate,60000);return}
+  location.replace(location.pathname+'?v='+encodeURIComponent(m[1]))}catch(e){}}
+setTimeout(checkUpdate,5000);setInterval(checkUpdate,10*60000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkUpdate()});
 }
 </script>
 </body>
