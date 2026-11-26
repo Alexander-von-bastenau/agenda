@@ -106,6 +106,51 @@ window.FlemishTTS = (() => {
     }
     if (cache.size > 80) cache.clear();
   }
+  // Cloud voice (Azure Dena/Arnaud via the Apps Script bridge). Throws on failure so the app can fall back to Piper.
+  const cloudMem = new Map();
+  const decode = ab => new Promise((ok, bad) => { const p = ctx.decodeAudioData(ab, ok, bad); if (p && p.then) p.then(ok, bad); });
+  async function cloudGet(url, key, voice, speed, text) {
+    const id = voice + '|' + speed + '|' + text;
+    if (cloudMem.has(id)) return cloudMem.get(id);
+    const job = (async () => {
+      let store = null, req = null;
+      try { store = await caches.open('bijtje-voice-1'); req = new Request('https://bijtje.local/v/' + encodeURIComponent(id)); const hit = await store.match(req); if (hit) return decode(await hit.arrayBuffer()); } catch (e) { store = null; }
+      const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 9000);
+      let j;
+      try {
+        const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ key, voice, speed, text }), signal: ctl.signal });
+        j = await r.json();
+      } finally { clearTimeout(t); }
+      if (!j || !j.ok) throw new Error('cloud ' + (j && j.error));
+      const bin = atob(j.audio), bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      try { store && await store.put(req, new Response(bytes.slice(), { headers: { 'Content-Type': 'audio/mpeg' } })); } catch (e) {}
+      return decode(bytes.buffer);
+    })();
+    cloudMem.set(id, job); job.catch(() => cloudMem.delete(id));
+    if (cloudMem.size > 150) cloudMem.delete(cloudMem.keys().next().value);
+    return job;
+  }
+  function playBuf(buf, my) {
+    return new Promise(res => {
+      if (my !== gen) return res();
+      const s = ctx.createBufferSource(); s.buffer = buf; s.connect(ctx.destination);
+      s.onended = () => res(); src = s; s.start();
+    });
+  }
+  async function sayCloud(lines, { url, key, voice = 'dena', speed = .9, onLine } = {}) {
+    const my = ++gen;
+    const gap = ctx.createBuffer(1, Math.round(ctx.sampleRate * .3), ctx.sampleRate);
+    const get = t => cloudGet(url, key, voice, speed, t);
+    let next = get(lines[0]);
+    for (let i = 0; i < lines.length; i++) {
+      const buf = await next; if (my !== gen) return;
+      if (i + 1 < lines.length) next = get(lines[i + 1]);
+      try { onLine && onLine(i); } catch (e) {}
+      await playBuf(buf, my); if (my !== gen) return;
+      if (i + 1 < lines.length) await playBuf(gap, my);
+    }
+  }
   function stop() { gen++; try { src && src.stop(); } catch (e) {} }
-  return { say, stop, unlock, load, ready: () => !!sess, test: async (t, v = 'nathalie') => { await load(v); return synth(t, .9); } };
+  return { say, sayCloud, stop, unlock, load, ready: () => !!sess, test: async (t, v = 'nathalie') => { await load(v); return synth(t, .9); } };
 })();
