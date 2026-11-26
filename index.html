@@ -762,8 +762,8 @@ function renderEd(){const T=t(),F=S.form,d=parse(S.sel),its=itemsAll(d);
     <label class="f">${T.voice}</label><div class="pick">${(azOK()?AZ:[]).concat(piperOK()?PIPER:[]).concat(voices.filter(v=>sc(v)>=9).map(v=>['local:'+v.voiceURI,'★ '+v.name])).concat(tts?CLAUDE_VOICES.map(v=>['claude:'+v,'Claude · '+v]):[],voices.filter(v=>sc(v)<9).map(v=>['local:'+v.voiceURI,v.name])).map(([id,n])=>`<button data-voice="${esc(id)}" ${pressed(curVoice()===id)}><span>▶ ${esc(n)}</span></button>`).join('')||`<p class="note">${T.novoice}</p>`}</div>
     <p class="note">${tts?T.vGood:T.vNo}</p>
     <details class="card" style="margin-top:10px"${S.tts&&S.tts.url?'':' open'}><summary><b>🌐 ${T.azT}</b> ${azOK()?'✅':''}</summary><p class="note">${T.azH}</p>
-    <label class="f" for="azUrl">${T.azU}</label><input type="url" id="azUrl" value="${esc(S.tts?.url||'')}" placeholder="https://script.google.com/macros/s/…/exec">
-    <label class="f" for="azKey">${T.azK}</label><input type="text" id="azKey" value="${esc(S.tts?.key||'')}" autocomplete="off"></details>
+    <label class="f" for="azUrl">${T.azU}</label><input type="url" id="azUrl" style="width:100%" value="${esc(S.tts?.url||'')}" placeholder="https://script.google.com/macros/s/…/exec">
+    <label class="f" for="azKey">${T.azK}</label><input type="text" id="azKey" style="width:100%" value="${esc(S.tts?.key||'')}" autocomplete="off"></details>
     <label class="f" for="cRate">${T.rate}</label><input type="range" id="cRate" min="0.7" max="1.1" step="0.05" value="${+S.cfg.rate||.9}" style="width:min(420px,100%)">
     <div class="row" style="margin-top:8px"><button class="btn ghost" id="cTest">🔊 ${T.testV}</button></div>
     <label class="f" for="cLang">${T.lang}</label><select id="cLang">${[['nl','Nederlands'],['es','Español'],['en','English']].map(([k,n])=>`<option value="${k}" ${(S.cfg.lang||'nl')===k?'selected':''}>${n}</option>`).join('')}</select>
@@ -986,6 +986,7 @@ ed.addEventListener('input',e=>{const el=e.target,F=S.form;if(el.id==='nText')S.
   if(el.id==='fNote')F.note=el.value;if(el.id==='fStar')F.star=el.checked;if(el.id==='fRep')F.repeat=el.checked;
   if(el.id==='fStart')F.start=el.value;if(el.id==='fEnd')F.end=el.value;
   if(S.lform){const m={lFrom:'from',lTo:'to',lDid:'did',lKm:'km',lCost:'cost',lCostNote:'costNote',lDate:'date',lWho:'uid'}[el.id];if(m)S.lform[m]=el.value}});
+let azT=null;ed.addEventListener('input',e=>{const el=e.target;if((el.id==='azUrl'||el.id==='azKey')&&S.isAdmin){clearTimeout(azT);azT=setTimeout(()=>el.dispatchEvent(new Event('change',{bubbles:true})),900)}});
 ed.addEventListener('change',async e=>{const el=e.target,D=el.dataset;
   if(D.vset&&S.isAdmin)return cfgSet({vol:{...vcfg(),[D.vset]:num(el.value)}});
   if(el.id==='lWho'&&S.lform){S.lform.uid=el.value;S.lform.name=S.members[el.value]?.name||'';return}
