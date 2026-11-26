@@ -380,8 +380,6 @@ function itemsAll(d){const k=key(d),wd=d.getDay();
 const itemsFor=d=>itemsAll(d).filter(i=>!i._off);
 const SEAS={lente:['🌸','lente','primavera','spring'],zomer:['🌞','zomer','verano','summer'],herfst:['🍂','herfst','otoño','autumn'],winter:['❄️','winter','invierno','winter']};
 const season=d=>{const x=(d.getMonth()+1)*100+d.getDate();return x>=321&&x<621?'lente':x>=621&&x<923?'zomer':x>=923&&x<1221?'herfst':'winter'};
-const datesFor=d=>(S.dates||[]).filter(x=>x.m===d.getMonth()+1&&x.d===d.getDate());
-function nextDate(){const td=today();for(let k=1;k<=7;k++){const x=datesFor(addD(td,k))[0];if(x)return {k,x}}return null}
 const what=i=>actName(i.act)||S.places[i.place]?.name||'';
 const LINEIDS={};const tag=(txt,ids)=>{LINEIDS[txt]=ids;return txt};
 const colOf=i=>ACT[i.act]?.[1]||S.places[i.place]?.color||'#eee';
@@ -467,7 +465,7 @@ function sayItem(i){const T=sp(),p=plSay(i.place);
   if(!p&&i.act)return T.doing(actSay(i.act)).replace(/\.$/,withP([i.person],'')+'.');
   return [p?T.hereAt(p).replace(/\.$/,withP([i.person],p)+'.'):'',i.act?T.doing(actSay(i.act)):''].filter(Boolean).join(' ')}
 function sayNow(){const T=sp(),td=today(),n=nowMin(),its=itemsFor(td),g=segs(its);
-  const out=[`${T.hi(n)}${S.cfg.name?' '+S.cfg.name:''}!`,T.day(t().days[td.getDay()]),T.podNow(podOf(n)),...datesFor(td).map(x=>T.special(x.name,true))];
+  const out=[`${T.hi(n)}${S.cfg.name?' '+S.cfg.name:''}!`,T.day(t().days[td.getDay()]),T.podNow(podOf(n))];
   if(n<sleepM())out.push(...itemsAll(td).filter(i=>i._off&&mins(i.end)>n).map(i=>tag(sp().cancel(cap(what(i))),[i.id])));
   if(n>=sleepM()||n<wakeM()){const st=g.filter(x=>x.place),sg=n>=sleepM()?st[st.length-1]:st[0];if(sg)out.push(T.sleepAt(plSay(sg.place)));out.push(T.sleepNow);const c=countLine(td);if(c)out.push(c);return out}
   if(fullDay(g,td)){out.push(T.whole(T.rel(0),plSay(g[0].place)+withP(g[0].people,plSay(g[0].place))));
@@ -485,10 +483,9 @@ function sayNow(){const T=sp(),td=today(),n=nowMin(),its=itemsFor(td),g=segs(its
     else if(stay)out.push(T.sleepAt(plSay(g.filter(x=>!x.ride&&x.place).pop().place)))
   }else out.push(T.nothing);
   const c=countLine(td);if(c)out.push(c);
-  {const nd=nextDate();if(nd)out.push(T.untilS(nd.k,nd.x.name))}
   return out}
 function sayDay(d){const T=sp(),diff=Math.round((d-today())/864e5),dn=t().days[d.getDay()],its=itemsFor(d),g=segs(its),past=diff<0;
-  const out=[T.head(diff,dn),...(diff>=0?datesFor(d).map(x=>T.special(x.name,diff===0)):[])];
+  const out=[T.head(diff,dn)];
   if(!past)out.push(...cancels(d));
   if(!its.length){out.push(T.nothing);return out}
   if(fullDay(g,d)){const ps=plSay(g[0].place);out.push(tag(past?T.atPast(T.rel(diff,dn),ps):(diff===0?T.whole(T.rel(0),ps+withP(g[0].people,ps)):T.wholeF(ps+withP(g[0].people,ps))),g[0].items.map(i=>i.id)));if(!past)out.push(...actLines(g[0].items,teller(mins(g[0].start)),'first'))}
@@ -530,7 +527,7 @@ function render(){const T=t(),td=today();
         if(dn)out=out.replace(/<span (class="pp" )?style/g,(m,c)=>c?'<span class="pp dn" style':'<span class="dn" style');
         if((cur||(!placed&&mins(x.start)>nm))&&!placed){placed=true;out=(cur?out:'')+`<span class="here">${ava(meP(),'me')}</span>`+(cur?'':out)}}
       return out}).join('');
-    return `<button class="day${d<td?' past':''}${isT?' today':''}" style="${cv(d)}" data-day="${k}" aria-label="${T.days[d.getDay()]} ${d.getDate()} ${T.mon[d.getMonth()]}">${isT?`<span class="meflag">${ava(meP(),'me')}</span>`:''}<span class="vname" aria-hidden="true"><span>${T.days[d.getDay()]}</span></span><b class="dshort" aria-hidden="true">${T.days[d.getDay()].slice(0,2)}</b><span class="tm">☀️</span>${mp?`${plTile(mp,'home'+(isT&&its.filter(x=>x.place===mp.id).every(x=>mins(x.end)<=nowMin())?' dn':''))}`:'<span class="cap">☀️</span>'}<span class="stack">${st}</span>${datesFor(d).map(x=>`<span class="cap">${esc(x.emoji||'🎂')}</span>`).join('')}${its.some(x=>x.star)?'<span class="cap">⭐</span>':''}<span class="cap" style="margin-top:auto">🌙</span></button>`}).join('');
+    return `<button class="day${d<td?' past':''}${isT?' today':''}" style="${cv(d)}" data-day="${k}" aria-label="${T.days[d.getDay()]} ${d.getDate()} ${T.mon[d.getMonth()]}">${isT?`<span class="meflag">${ava(meP(),'me')}</span>`:''}<span class="vname" aria-hidden="true"><span>${T.days[d.getDay()]}</span></span><b class="dshort" aria-hidden="true">${T.days[d.getDay()].slice(0,2)}</b><span class="tm">☀️</span>${mp?`${plTile(mp,'home'+(isT&&its.filter(x=>x.place===mp.id).every(x=>mins(x.end)<=nowMin())?' dn':''))}`:'<span class="cap">☀️</span>'}<span class="stack">${st}</span>${its.some(x=>x.star)?'<span class="cap">⭐</span>':''}<span class="cap" style="margin-top:auto">🌙</span></button>`}).join('');
   $('#board').classList.toggle('hasToday',hasT);
   {const n=S.notes.filter(x=>x.day===key(td)).length+chatUnread(),bd=$('#badge');bd.hidden=!n;bd.textContent=n}
   if(hasT&&!S.scrolled&&S.items.length){const b=$('#board'),d=$('.day.today');if(b&&d&&b.scrollWidth>b.clientWidth){S.scrolled=true;b.scrollLeft=d.offsetLeft-(b.clientWidth-d.clientWidth)/2}}
@@ -551,7 +548,7 @@ function openDay(k,talk=true){S.open=k;const d=parse(k),T=t(),its=itemsAll(d),w=
   const H=y(s)+90;
   const line=isT&&n>=w&&n<=s?`<div class="nowline" id="nowline" style="top:${y(n)}px">${ava(meP(),'me')}</div>`:'';
   $('#daySheet').innerHTML=`<div class="sheet-h"><div class="dayhead" style="${cv(d)}"><b>${cap(T.days[d.getDay()])}</b><span>${d.getDate()} ${T.mon[d.getMonth()]}</span></div><button class="spk${speaking?' talk':''}" data-spkday="${k}" aria-label="Voorlezen">🔊</button>${S.canWrite?`<button class="edbtn holdbtn" data-hold="plan:${k}" aria-label="${T.planDay}" title="${T.holdHint}"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30"/></svg>✏️</button>`:''}<button class="close" data-x="day" aria-label="${T.close}">✕</button></div>
-  ${datesFor(d).map(x=>`<button class="special blk0" data-say="${esc(sp().special(x.name,isT))}"><span class="big">${esc(x.emoji||'🎂')}</span>${ava(S.people[x.person])}<b>${esc(x.name)}</b></button>`).join('')}
+
   <div class="tl" style="height:${H}px"><div class="endcap" style="top:0">☀️</div>${hrs}${its.length?blocks:''}<div class="endcap" style="top:${y(s)+14}px">🌙</div>${line}</div>${(()=>{const ns=S.notes.filter(x=>x.day===k);return ns.length?`<div class="hnotes"><h4>📝 ${T.dayNotes}</h4>${ns.map(msgHTML).join('')}</div>`:''})()}`;
   if(!$('#dayOv').classList.contains('on')){$('#dayOv').classList.add('on');
     requestAnimationFrame(()=>{const el=$('#nowline')||$('#daySheet .blk.cur');if(el)el.scrollIntoView({block:'center'})})}
@@ -720,7 +717,7 @@ function renderEd(){const T=t(),F=S.form,d=parse(S.sel),its=itemsAll(d);
     h=`<h2 class="hello">${T.homeHi(esc(S.member?.name||''))} 👋</h2>${S.canWrite?logNudge():''}
       <div class="card wkc"><b>${T.wkTitle}</b>${wk.map(d=>{const k=key(d),cs=claimsOn(k);return `<div class="wkl" style="${cv(d)}"><span class="dot"></span><span class="grow"><b>${cap(T.days[d.getDay()])} ${d.getDate()} ${T.mon[d.getMonth()]}</b><br>${cs.length?cs.map(c=>`${esc(c.name||T.someone)} ${esc(c.from)}–${esc(c.to)}`).join(' · '):`<span class="nob">${T.wkNobody}</span>`}</span>${S.canWrite?`<button class="btn${cs.length?' ghost':''}" data-wkdo="${k}">${T.wkDo}</button>`:''}</div>`}).join('')}</div>
       <div class="bigs">${big('care','🙋',T.hCare,T.hCareS)}${big('overview','📅',T.hWeek,T.hWeekS)}${S.canWrite?big('chat','💬',T.hChat,T.hChatS,unread)+big('docs','📄',T.hDocs,T.hDocsS):''}</div>
-      <h3 class="sec">${T.hMore}</h3><div class="sms">${sm('dates','🎂',T.dates)}${sm('notes','📝',T.notes)}${S.canWrite?sm('log','🧾',T.log):''}${sm('account','🔑',T.account)}</div>
+      <h3 class="sec">${T.hMore}</h3><div class="sms">${sm('notes','📝',T.notes)}${S.canWrite?sm('log','🧾',T.log):''}${sm('account','🔑',T.account)}</div>
       ${S.isAdmin?`<h3 class="sec">${T.hAdmin}</h3><div class="sms">${sm('vol','💶',T.vol)}${sm('family','👪',T.family)}${sm('plan','✏️',T.plan)}${sm('people','🙂',T.people)}${sm('places','🏠',T.places)}${sm('settings','⚙️',T.settings)}</div>`:''}
       <button class="btn ghost viewb" data-x="ed">👁️ ${T.hView}</button>`}
   if(S.tab==='plan'){
@@ -762,7 +759,7 @@ function renderEd(){const T=t(),F=S.form,d=parse(S.sel),its=itemsAll(d);
     <label class="f">${T.dayColors}</label><div class="daycols">${[1,2,3,4,5,6,0].map(i=>`<label><input type="color" data-dcol="${i}" value="${cols[i]}">${T.days[i]}</label>`).join('')}</div>`}
   if(S.tab==='overview'){const td=today(),base=addD(td,-((td.getDay()+6)%7)+S.ovWk*7);
     h=`<button class="btn ghost viewb" data-x="ed" style="margin:0 0 14px">👁️ ${T.hView}</button><div class="navrow" style="margin-bottom:12px"><button class="btn ghost" data-ovstep="-1">◀</button><b style="flex:1;text-align:center">${T.week} ${longDate(base)}</b><button class="btn ghost" data-ovstep="1">▶</button></div><div class="ovw">`+[...Array(7)].map((_,n)=>{const d=addD(base,n),k=key(d),g=segs(itemsFor(d)),ns=S.notes.filter(x=>x.day===k);
-      return `<section class="ovd${k===key(td)?' today':''}" style="${cv(d)}"><span class="bar"></span><div><h3><span>${cap(T.days[d.getDay()])} ${d.getDate()} ${T.mon[d.getMonth()]} <small class="note">☀️ ${hhmm(wakeM(d))} · 🌙 ${hhmm(sleepM(d))}</small>${datesFor(d).map(x=>`<br>${esc(x.emoji||'🎂')} ${esc(x.name)}`).join('')}</span>${S.canWrite?`<span class="row" style="gap:6px"><button class="btn ghost" data-planday="${k}">✏️ ${T.plan}</button><button class="btn ghost" data-noteday="${k}">📝</button></span>`:''}</h3>
+      return `<section class="ovd${k===key(td)?' today':''}" style="${cv(d)}"><span class="bar"></span><div><h3><span>${cap(T.days[d.getDay()])} ${d.getDate()} ${T.mon[d.getMonth()]} <small class="note">☀️ ${hhmm(wakeM(d))} · 🌙 ${hhmm(sleepM(d))}</small></span>${S.canWrite?`<span class="row" style="gap:6px"><button class="btn ghost" data-planday="${k}">✏️ ${T.plan}</button><button class="btn ghost" data-noteday="${k}">📝</button></span>`:''}</h3>
       ${g.length?g.map(x=>{const pl=S.places[x.place],ppl=[...new Set(x.people)].map(id=>S.people[id]?.name).filter(Boolean),notes=x.items.map(i=>i.note).filter(Boolean);
         return `<div class="seg"><time>${esc(x.start)}–${esc(x.end)}</time><span><span class="mini">${pl?plTile(pl):''}${[...new Set(x.items.map(i=>i.act).filter(Boolean))].map(a=>tile(a,ACT[a]?.[1]||'#fff')).join('')}</span><b>${esc(pl?cap(plSay(x.place)):'')}</b>${ppl.length?` · ${esc(ppl.join(', '))}`:''}${x.acts.length?` · ${esc(x.acts.join(', '))}`:''}${notes.length?`<br><span class="note">${esc(notes.join(' · '))}</span>`:''}</span></div>`}).join(''):`<p class="note" style="margin:0">${T.nothingDay}</p>`}
       ${ns.map(msgHTML).join('')}</div></section>`}).join('')+`</div>`}
@@ -813,13 +810,6 @@ function renderEd(){const T=t(),F=S.form,d=parse(S.sel),its=itemsAll(d);
     h+=`<div class="card"><label class="f" style="margin-top:0">${T.mailVia}</label><div class="pick">${[['gmail',T.mailG],['app',T.mailA]].map(([k,l])=>`<button data-mailpref="${k}" ${pressed(mailPref()===k)}><span>${l}</span></button>`).join('')}</div><p class="note">${T.mailHelp}</p></div>`;
     const alone=matchMedia('(display-mode: standalone)').matches||navigator.standalone,ios=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
     h+=`<div class="card"><p><b>${T.insT}</b></p>${alone?`<p class="note">${T.insDone}</p>`:INST?`<div class="row"><button class="btn" id="acInst">${T.insBtn}</button></div>`:`<p class="note">${ios?T.insIos:T.insOther}</p>`}</div>`}
-  if(S.tab==='dates'){const DF=S.dform=S.dform||{name:'',date:'',emoji:'🎂',person:''};
-    h=`<div class="card"><label class="f" for="dName">${T.dName}</label><input type="text" id="dName" maxlength="60" value="${esc(DF.name)}">
-      <label class="f" for="dDate">${T.dDate}</label><input type="date" id="dDate" value="${DF.date}" style="max-width:220px">
-      <label class="f">${T.psymbol}</label><div class="pick">${['🎂','🎁','🎉','🎄','🎅','🐣','🎃','❤️','⭐','🎆'].map(e=>`<button data-demoji="${e}" ${pressed(DF.emoji===e)}>${e}</button>`).join('')}</div>
-      <label class="f">${T.person}</label><div class="pick"><button data-dperson="" ${pressed(!DF.person)}>—</button>${byName(S.people).map(p=>`<button data-dperson="${p.id}" ${pressed(DF.person===p.id)}>${esc(p.animal)}<span>${esc(p.name)}</span></button>`).join('')}</div>
-      <div class="row" style="margin-top:12px"><button class="btn" id="dAdd">${T.add}</button><span class="note" id="fMsg"></span></div></div>
-      ${[...(S.dates||[])].sort((a,b)=>a.m*100+a.d-(b.m*100+b.d)).map(x=>`<div class="li"><span style="font-size:30px">${esc(x.emoji||'🎂')}</span>${ava(S.people[x.person])}<span class="grow"><b>${x.d} ${T.mon[x.m-1]}</b> · ${esc(x.name)}</span><button class="btn warn" data-deldate="${esc(x.id)}">${T.del}</button></div>`).join('')||`<p class="note">${T.dNone}</p>`}`}
   if(S.tab==='notes'){let sign='';try{sign=localStorage.getItem('agenda-sign')||''}catch(e){}sign=sign||S.member?.name||'';
     h=`${S.canWrite!==false?`<div class="card"><textarea id="nText" maxlength="600" placeholder="${esc(T.msgPh)}">${esc(S.nDraft||'')}</textarea>
       <div class="row" style="margin-top:8px"><label>${T.sign}<br><input type="text" id="nSign" maxlength="40" value="${esc(sign)}" style="max-width:220px"></label><label>${T.forDay}<br><input type="date" id="nDay" value="${S.noteDay||''}" style="max-width:200px"></label></div>
@@ -959,11 +949,6 @@ ed.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
     return w(async()=>{const bt=S.db.batch();bt.delete(S.db.doc('members/'+id));if(tk&&S.invites.some(v=>v.id===tk))bt.delete(S.db.doc('invites/'+tk));await bt.commit()})}
   if(b.id==='rmNo'){S.rmAsk=null;renderEd();return}
   if(D.mrole&&D.mid&&D.mid!==S.me)return w(()=>S.db.doc('members/'+D.mid).update({role:D.mrole}));
-  if(D.demoji){S.dform.emoji=D.demoji;renderEd();return}
-  if('dperson' in D){S.dform.person=D.dperson;renderEd();return}
-  if(b.id==='dAdd'){const DF=S.dform;if(!DF.name.trim()||!DF.date){flash(t().needW);return}const [,mm,dd]=DF.date.split('-').map(Number);
-    return w(async()=>{await col('dates').add({name:DF.name.trim(),m:mm,d:dd,emoji:DF.emoji,person:DF.person||''});S.dform=null;renderEd()})}
-  if(D.deldate)return w(()=>col('dates').doc(D.deldate).delete());
   if(b.id==='nPost'){const tx=$('#nText').value.trim();if(!tx)return;const sign=$('#nSign').value.trim();try{localStorage.setItem('agenda-sign',sign)}catch(e){}
     return w(async()=>{await col('notes').add({text:tx,sign,day:$('#nDay').value||'',by:S.me||'',at:new Date().toISOString()});S.nDraft='';renderEd()})}
   if(D.delnote)return w(()=>col('notes').doc(D.delnote).delete());
@@ -986,7 +971,7 @@ ed.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
   if(b.id==='addP')return w(()=>col('people').add({name:'?',animal:ANIMALS[1+Object.keys(S.people).length%(ANIMALS.length-1)],color:SW[Object.keys(S.people).length%SW.length],photo:''}));
   if(b.id==='addL')return w(()=>col('places').add({name:'?',emoji:'⭐',color:SW[Object.keys(S.places).length%SW.length]}));
 });
-ed.addEventListener('input',e=>{const el=e.target,F=S.form;if(el.id==='nText')S.nDraft=el.value;if(el.id==='chText')S.chDraft=el.value;if(el.id==='iName'&&S.iform)S.iform.name=el.value;if(el.id==='iEmail'&&S.iform)S.iform.email=el.value;if(el.id==='cFrom'&&S.cform)S.cform.from=el.value;if(el.id==='cTo'&&S.cform)S.cform.to=el.value;if(el.id==='dName'&&S.dform)S.dform.name=el.value;if(el.id==='dDate'&&S.dform)S.dform.date=el.value;
+ed.addEventListener('input',e=>{const el=e.target,F=S.form;if(el.id==='nText')S.nDraft=el.value;if(el.id==='chText')S.chDraft=el.value;if(el.id==='iName'&&S.iform)S.iform.name=el.value;if(el.id==='iEmail'&&S.iform)S.iform.email=el.value;if(el.id==='cFrom'&&S.cform)S.cform.from=el.value;if(el.id==='cTo'&&S.cform)S.cform.to=el.value;
   if(el.id==='fNote')F.note=el.value;if(el.id==='fStar')F.star=el.checked;if(el.id==='fRep')F.repeat=el.checked;
   if(el.id==='fStart')F.start=el.value;if(el.id==='fEnd')F.end=el.value;
   if(S.lform){const m={lFrom:'from',lTo:'to',lDid:'did',lKm:'km',lCost:'cost',lCostNote:'costNote',lDate:'date',lWho:'uid'}[el.id];if(m)S.lform[m]=el.value}});
@@ -1088,7 +1073,6 @@ const FB={apiKey:"AIzaSyDnz1i5xpoNL34Bzqy0TeHBYy8-7FPaez4",authDomain:"agenda-de
   db.collection('places').onSnapshot(s=>{S.places=toMap(s);render();done(s)},fail);
   db.collection('items').onSnapshot(s=>{S.items=s.docs.map(d=>({id:d.id,...d.data()}));render();done(s)},fail);
   setTimeout(()=>{const v=curVoice();if(v.startsWith('piper:'))window.FlemishTTS?.load(v.slice(6)).catch(()=>{})},2500);
-  db.collection('dates').onSnapshot(s=>{S.dates=s.docs.map(d=>({id:d.id,...d.data()}));render();done(s)},fail);
   db.collection('days').onSnapshot(s=>{S.days=Object.fromEntries(s.docs.map(d=>[d.id,d.data()]));render();done(s)},fail);
   db.collection('notes').orderBy('at','desc').limit(200).onSnapshot(s=>{S.notes=s.docs.map(d=>({id:d.id,...d.data()}));render();done(s)},fail);
   db.doc('config/main').onSnapshot(s=>{S.cfg=s.exists?{...s.data()}:{};render();done(s)},fail);
@@ -1107,7 +1091,7 @@ const FB={apiKey:"AIzaSyDnz1i5xpoNL34Bzqy0TeHBYy8-7FPaez4",authDomain:"agenda-de
 })();
 
 // self-update: every device checks for a newer Bijtje and reloads when nobody is busy
-const BUILD='2026-11-26-1';
+const BUILD='2026-11-26-2';
 async function checkUpdate(){try{const r=await fetch(location.pathname+'?check='+Date.now(),{cache:'no-store'});if(!r.ok)return;
   const m=(await r.text()).match(/const BUILD='([^']+)'/);if(!m||m[1]===BUILD)return;
   if(speaking||$('#edOv')?.classList.contains('on')||typing()){setTimeout(checkUpdate,60000);return}
